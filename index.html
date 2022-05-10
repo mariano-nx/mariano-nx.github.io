@@ -1,7 +1,26 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat </title>
+		<script type="text/javascript" charset="utf-8">
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const client = urlParams.get('client');
+			console.log(client);
+			
+			var request = new XMLHttpRequest();
+			request.open("GET","./example_2.json", false);
+			request.send(null);
+			var jsonData = JSON.parse(request.responseText);
+			console.log(jsonData);
+			
+		  
+		</script>
+	</head>
+	<body>
+	<h1>Hello World</h1>
+
+	</body>
 </html>
