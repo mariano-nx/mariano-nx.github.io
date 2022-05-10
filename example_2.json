@@ -1,5 +1,5 @@
 {
-    
+    "clients": {
         "EssexDemo": {
             "title":"Demo chat for Essex Powerlines Corporation",
 			"environment": "use1",
@@ -13,5 +13,5 @@
 			"deploymentID":"fc20b39f-e7e7-48df-8d6b-4e1e54824876"
 		
 		}
-    
+    }
 }
