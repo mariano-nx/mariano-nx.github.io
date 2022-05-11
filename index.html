@@ -25,18 +25,9 @@
 			}
 			//console.log(clientFound);
 			if (clientFound){
-				console.log(jsonData['clients'][client].title);
-				console.log(jsonData['clients'][client].link);
-				console.log(jsonData['clients'][client].deploymentID);
-				console.log(jsonData['clients'][client].environment);
-				
-				//let link = jsonData['clients'][client].link;
-				//let title = jsonData['clients'][client].title;
-				//let deploymentID = jsonData['clients'][client].deploymentID;
-				//let environment = jsonData['clients'][client].environment;
-				
-				//document.getElementById("demo").innerHTML = jsonData['clients'][client].title;
-				//document.getElementById("demo").innerHTML = 'Text text text';
+				window.onload = function(){
+					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
+				}
 				
 				(function (g, e, n, es, ys) {
 				g['_genesysJs'] = e;
