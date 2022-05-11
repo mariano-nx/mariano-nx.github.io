@@ -39,9 +39,9 @@
 				deploymentId: jsonData['clients'][client].deploymentID
 			  });
 			  console.log(jsonData["clients"][client].title)
-			  //window.onload = function(){
-				//	document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
-				//}
+			  window.onload = function(){
+					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
+				}
 				
 			}else{
 				alert('Client ' + client + ' not found!');
