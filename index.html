@@ -25,10 +25,7 @@
 			}
 			//console.log(clientFound);
 			if (clientFound){
-				window.onload = function(){
-					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
-				}
-				
+												
 				(function (g, e, n, es, ys) {
 				g['_genesysJs'] = e;
 				g[e] = g[e] || function () {
@@ -41,6 +38,10 @@
 				environment: jsonData['clients'][client].environment,
 				deploymentId: jsonData['clients'][client].deploymentID
 			  });
+			  console.log(jsonData["clients"][client].title)
+			  window.onload = function(){
+					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
+				}
 				
 			}else{
 				alert('Client ' + client + ' not found!');
