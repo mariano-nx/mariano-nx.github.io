@@ -11,16 +11,55 @@
 			console.log(client);
 			
 			var request = new XMLHttpRequest();
-			request.open("GET","./example_2.json", false);
+			request.open("GET","./clients.json", false);
 			request.send(null);
 			var jsonData = JSON.parse(request.responseText);
-			console.log(jsonData);
+			//console.log(jsonData);
+			
+			let clientFound = false
+			for(key in jsonData['clients'])
+			{				
+				if(client===key){
+					clientFound=true;
+				}			  
+			}
+			//console.log(clientFound);
+			if (clientFound){
+				console.log(jsonData['clients'][client].title);
+				console.log(jsonData['clients'][client].link);
+				console.log(jsonData['clients'][client].deploymentID);
+				console.log(jsonData['clients'][client].environment);
+				
+				//let link = jsonData['clients'][client].link;
+				//let title = jsonData['clients'][client].title;
+				//let deploymentID = jsonData['clients'][client].deploymentID;
+				//let environment = jsonData['clients'][client].environment;
+				
+				document.getElementById("demo").innerHTML = jsonData['clients'][client].title;
+				
+				(function (g, e, n, es, ys) {
+				g['_genesysJs'] = e;
+				g[e] = g[e] || function () {
+				  (g[e].q = g[e].q || []).push(arguments)
+				};
+				g[e].t = 1 * new Date();
+				g[e].c = es;
+				ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+			  })(window, 'Genesys', jsonData['clients'][client].link, {
+				environment: jsonData['clients'][client].environment,
+				deploymentId: jsonData['clients'][client].deploymentID
+			  });
+				
+			}else{
+				alert('Client ' + client + ' not found!');
+			}	
+			
 			
 		  
 		</script>
 	</head>
 	<body>
-	<h1>Hello World</h1>
+	<h3 id="demo">Page for presenting demos</h3>
 
 	</body>
 </html>
