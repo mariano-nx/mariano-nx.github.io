@@ -7,7 +7,7 @@
 		<script type="text/javascript" charset="utf-8">
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
-			let client = urlParams.get('client');
+			var client = urlParams.get('client');
 			console.log(client);
 			
 			var request = new XMLHttpRequest();
@@ -20,6 +20,7 @@
 			}else{
 				let clientFound = false;
 				let defaultClient = false;
+				
 				for(key in jsonData['clients'])
 				{				
 					if(client===key){
@@ -33,6 +34,7 @@
 					
 				}
 				console.log(clientFound);
+
 				if (clientFound==true || defaultClient==true){
 													
 					(function (g, e, n, es, ys) {
