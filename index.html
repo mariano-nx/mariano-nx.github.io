@@ -7,7 +7,7 @@
 		<script type="text/javascript" charset="utf-8">
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
-			let client = urlParams.get('client');
+			var client = urlParams.get('client');
 			console.log(client);
 			
 			var request = new XMLHttpRequest();
