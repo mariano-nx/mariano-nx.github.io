@@ -14,7 +14,7 @@
 			request.open("GET","./clients.json", false);
 			request.send(null);
 			var jsonData = JSON.parse(request.responseText);
-			//console.log(jsonData);
+			console.log(jsonData);
 			if(jsonData.length<=0){
 				alert('Please enter the client name as input parameter!');
 			}else{
@@ -24,11 +24,6 @@
 					if(client===key){
 						clientFound=true;
 					}
-					else{
-						alert('Client ' + client + ' not found! Presenting EssexDemo');
-						clientFound=true;
-						jsonData['clients'][client]="EssexDemo"
-					}			  
 				}
 				//console.log(clientFound);
 				if (clientFound){
