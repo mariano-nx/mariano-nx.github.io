@@ -7,35 +7,34 @@
 		<script type="text/javascript" charset="utf-8">
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
-			var client = urlParams.get('client');
+			let client = urlParams.get('client');
 			console.log(client);
 			
 			var request = new XMLHttpRequest();
 			request.open("GET","./clients.json", false);
 			request.send(null);
 			var jsonData = JSON.parse(request.responseText);
-			console.log(jsonData);
+
 			if(client===null){
 				alert('Please enter the client name as input parameter!');
 			}else{
 				let clientFound = false;
-				let defaultClient = false;
 				
 				for(key in jsonData['clients'])
 				{				
 					if(client===key){
 						clientFound=true;
-					}else{
-						defaultClient=true;
-						alert('Client ' + client + ' not found!');
-						alert('Wll show default client: EssexDemo');
-						client="EssexDemo";
-					}
-					
+					}					
 				}
+
 				console.log(clientFound);
 
-				if (clientFound==true || defaultClient==true){
+				if(clientFound==false){
+					alert('Client ' + client + ' not found!');
+					alert('Wll show default client: EssexDemo');
+					client="EssexDemo";
+				}
+				
 													
 					(function (g, e, n, es, ys) {
 					g['_genesysJs'] = e;
@@ -54,12 +53,9 @@
 						document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
 					}
 					
-				}//else{
-				//	alert('Client ' + client + ' not found!');
-				//}	
+
 		}
-			
-			
+						
 		  
 		</script>
 	</head>
