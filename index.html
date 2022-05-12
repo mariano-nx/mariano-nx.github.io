@@ -15,7 +15,7 @@
 			request.send(null);
 			var jsonData = JSON.parse(request.responseText);
 			console.log(jsonData);
-			if(jsonData.length<=0){
+			if(jsonData.length==null){
 				alert('Please enter the client name as input parameter!');
 			}else{
 				let clientFound = false
