@@ -18,13 +18,14 @@
 			if(client===null){
 				alert('Please enter the client name as input parameter!');
 			}else{
-				let clientFound = false
+				let clientFound = false;
+				let defaultClient = false;
 				for(key in jsonData['clients'])
 				{				
 					if(client===key){
 						clientFound=true;
 					}else{
-						clientFound=false;
+						defaultClient=true;
 						alert('Client ' + client + ' not found!');
 						alert('Wll show default client: EssexDemo');
 						client="EssexDemo";
@@ -32,7 +33,7 @@
 					
 				}
 				console.log(clientFound);
-				//if (clientFound){
+				if (clientFound==true || defaultClient==true){
 													
 					(function (g, e, n, es, ys) {
 					g['_genesysJs'] = e;
@@ -51,7 +52,7 @@
 						document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
 					}
 					
-				//}//else{
+				}//else{
 				//	alert('Client ' + client + ' not found!');
 				//}	
 		}
