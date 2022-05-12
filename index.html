@@ -7,7 +7,7 @@
 		<script type="text/javascript" charset="utf-8">
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
-			const client = urlParams.get('client');
+			let client = urlParams.get('client');
 			console.log(client);
 			
 			var request = new XMLHttpRequest();
@@ -15,7 +15,7 @@
 			request.send(null);
 			var jsonData = JSON.parse(request.responseText);
 			console.log(jsonData);
-			if(client==null){
+			if(client===null){
 				alert('Please enter the client name as input parameter!');
 			}else{
 				let clientFound = false
@@ -27,7 +27,7 @@
 						clientFound=false;
 						alert('Client ' + client + ' not found!');
 						alert('Wll show default client: EssexDemo');
-						jsonData['clients'][client]="EssexDemo";
+						client="EssexDemo";
 					}
 					
 				}
