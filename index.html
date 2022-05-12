@@ -15,7 +15,7 @@
 			request.send(null);
 			var jsonData = JSON.parse(request.responseText);
 			console.log(jsonData);
-			if(jsonData==null){
+			if(client==null){
 				alert('Please enter the client name as input parameter!');
 			}else{
 				let clientFound = false
@@ -27,7 +27,7 @@
 						clientFound=false;
 						alert('Client ' + client + ' not found!');
 						alert('Wll show default client: EssexDemo');
-						client="EssexDemo";
+						jsonData['clients'][client]="EssexDemo";
 					}
 					
 				}
