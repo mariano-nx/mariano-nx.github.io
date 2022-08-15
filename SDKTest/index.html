@@ -61,7 +61,42 @@
 	  Genesys("subscribe", "Conversations.error", function(){
 		console.log("Error:", o.data.error);
 	  });
-	
+	  
+		var autoLaunch = function () {
+			var time;
+			window.onload = resetTimer;
+			// DOM Events
+			document.onmousemove = resetTimer;
+			document.onkeydown = resetTimer;
+
+			function launch() {
+				Genesys("command", "Messenger.open", {},
+					function(o){
+					toggleVisibility();
+				},  // if resolved
+					function(o){    // if rejected
+					Genesys("command", "Messenger.close");
+					}
+				);
+			}
+
+			function resetTimer() {
+				clearTimeout(time);
+				time = setTimeout(logout, 6000)
+				// 1000 milliseconds = 1 second
+			}
+		};
+		
+		window.onload = function() {
+			autoLaunch();
+		}
+		
+		window.addEventListener('load', resetTimer, true);
+		var events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+		events.forEach(function(name) {
+			document.addEventListener(name, resetTimer, true);
+		});
+
 </script>
 		
 	</head>
