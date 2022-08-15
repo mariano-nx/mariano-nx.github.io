@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat with web form </title>
+		<script type="text/javascript" charset="utf-8">
+	  (function (g, e, n, es, ys) {
+		g['_genesysJs'] = e; g[e] = g[e] || function () {(g[e].q = g[e].q || []).push(arguments)};
+		g[e].t = 1 * new Date(); g[e].c = es; ys = document.createElement('script'); ys.async = 1;
+		ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+	  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+		deploymentId: 'c11d96c6-6b74-4ab3-a22c-422375074801',
+		environment:'use1',
+		debug: true
+	  });
+	  
+	  function toggleVisibility() {
+			var x = document.getElementById("launchChat");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
+
+	  function toggleMessenger(){
+		Genesys("command", "Messenger.open", {},
+		function(o){
+			
+			//Genesys("command", "Launcher.show");
+			toggleVisibility();
+			//document.getElementById('launchChat').innerHTML = "Close chat"
+		},  // if resolved
+		function(o){    // if rejected
+			Genesys("command", "Messenger.close");
+			
+		}
+		);
+		//document.getElementById('launchChat').innerHTML = "Start chat"
+	  } 
+	  
+	  Genesys("subscribe", "Messenger.closed",function(o){
+    console.log("Messenger CLOSED!");
+	toggleVisibility();
+	}
+	);
+	
+</script>
+		
+	</head>
+	<body>
+	
+		<button id="launchChat" onclick="toggleMessenger()">
+			Start chat
+		</button>
+		
+
+	</body>
+	
+</html>
