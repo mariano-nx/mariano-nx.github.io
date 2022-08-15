@@ -40,11 +40,27 @@
 		//document.getElementById('launchChat').innerHTML = "Start chat"
 	  } 
 	  
-	  Genesys("subscribe", "Messenger.closed",function(o){
-    console.log("Messenger CLOSED!");
-	toggleVisibility();
-	}
-	);
+	  Genesys("subscribe", "Messenger.closed",	toggleVisibility());
+	  
+	  Genesys("subscribe", "Conversations.ready", function(){
+		console.log("CONVERSATIONS READY");
+	  });
+	  
+	  Genesys("subscribe", "Conversations.opened", function(){
+		console.log("CONVERSATIONS OPENED");
+	  });
+	  
+	  Genesys("subscribe", "Conversations.started", function(){
+		console.log("CONVERSATIONS STARTED");
+	  });
+	  
+	  Genesys("subscribe", "Conversations.closed", function(){
+		console.log("CONVERSATIONS CLOSED");
+	  });
+	  
+	  Genesys("subscribe", "Conversations.error", function(){
+		console.log("Error:", o.data.error);
+	  });
 	
 </script>
 		
