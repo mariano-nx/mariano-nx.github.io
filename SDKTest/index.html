@@ -40,7 +40,7 @@
 		//document.getElementById('launchChat').innerHTML = "Start chat"
 	  } 
 	  
-	  Genesys("subscribe", "Messenger.closed",	toggleVisibility());
+	  Genesys("subscribe", "Messenger.closed",	toggleVisibility);
 	  
 	  Genesys("subscribe", "Conversations.ready", function(){
 		console.log("CONVERSATIONS READY");
