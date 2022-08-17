@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat with web form </title>
+		<script type="text/javascript" charset="utf-8">
+	  /*(function (g, e, n, es, ys) {
+		g['_genesysJs'] = e; g[e] = g[e] || function () {(g[e].q = g[e].q || []).push(arguments)};
+		g[e].t = 1 * new Date(); g[e].c = es; ys = document.createElement('script'); ys.async = 1;
+		ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+	  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+		deploymentId: 'c11d96c6-6b74-4ab3-a22c-422375074801',
+		environment:'use1',
+		debug: true
+	  });*/
+	  
+	  function WebSocketTest() {
+            
+            if ("WebSocket" in window) {
+               alert("WebSocket is supported by your Browser!");
+               
+               // Let us open a web socket
+               var ws = new WebSocket("wss://webmessaging.mypurecloud.com/v1?deploymentId=c11d96c6-6b74-4ab3-a22c-422375074801);
+				
+               ws.onopen = function() {
+                  
+                  // Web Socket is connected, send data using send()
+                  ws.send("hi");
+                  alert("Message is sent...");
+               };
+				
+               ws.onmessage = function (evt) { 
+                  var received_msg = evt.data;
+                  alert("Message is received...");
+				  console.log(received_msg);
+               };
+				
+               ws.onclose = function() { 
+                  
+                  // websocket is closed.
+                  alert("Connection is closed..."); 
+               };
+            } else {
+              
+               // The browser doesn't support WebSocket
+               alert("WebSocket NOT supported by your Browser!");
+            }
+         }
+	  
+	  
+	 
+</script>
+		
+	</head>
+	<body>
+	
+		<form name="webchat_form" action="javascript:WebSocketTest()">
+		  <label for="message">message:</label><br>
+		  <input type="text" id="message" name="message"><br>
+		  
+		  <input id="sendMessage" type="submit" value="send">
+		</form>
+
+	</body>
+	
+</html>
