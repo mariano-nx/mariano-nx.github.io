@@ -40,7 +40,30 @@
 				  console.log(received_msg);
 				 
                };
+			   
+			   ws.onopen = function() {
+                  
+                  // Web Socket is connected, send data using send()
+                  ws.send(JSON.stringify({
+					  
+				  "action": "onMessage",
+				  "token": "0000000-0000-0000-0000-0000000000",
+				  "message": {
+					"type": "Text",
+					"text": "Hi"
+				  }
+
+				  }));
+                  alert("Hi Message is sent...");
+               };
 				
+			ws.onmessage = function (evt) { 
+                  var received_msg = evt.data;
+                  alert("Message is received...");
+				  console.log(received_msg);
+				 
+               };
+			  
                ws.onclose = function() { 
                   
                   // websocket is closed.
