@@ -16,7 +16,7 @@
 	  });*/
 	  
 	  function WebSocketTest() {
-            
+            UUID="TEST1001"
             if ("WebSocket" in window) {
                alert("WebSocket is supported by your Browser!");
                
@@ -26,7 +26,11 @@
                ws.onopen = function() {
                   
                   // Web Socket is connected, send data using send()
-                  ws.send("hi");
+                  ws.send(JSON.stringify({
+					  "action": "configureSession",
+					  "deploymentId": "c11d96c6-6b74-4ab3-a22c-422375074801",
+                      "token": "00000000-0000-0000-0000-000000000000"
+				  }));
                   alert("Message is sent...");
                };
 				
@@ -34,6 +38,8 @@
                   var received_msg = evt.data;
                   alert("Message is received...");
 				  console.log(received_msg);
+				  var obj = JSON.parse(evt);
+				  console.log(obj);
                };
 				
                ws.onclose = function() { 
