@@ -17,6 +17,7 @@
 	  
 	  function WebSocketTest() {
             UUID="TEST1001"
+			var test=0
             if ("WebSocket" in window) {
                alert("WebSocket is supported by your Browser!");
                
@@ -34,16 +35,14 @@
                   alert("Message is sent...");
                };
 				
-               ws.onmessage = function (evt) { 
-                  var received_msg = evt.data;
-                  alert("Message is received...");
-				  console.log(received_msg);
-				 
-               };
+               ws.onmessage = function (evt) {
+				var received_msg = evt.data;
+				alert("Message is received...");
+				console.log(received_msg);			   
 			   
-			   ws.onopen = function() {
-                  
-                  // Web Socket is connected, send data using send()
+				if(test===0){                 
+				  
+				  // Web Socket is connected, send data using send()
                   ws.send(JSON.stringify({
 					  
 				  "action": "onMessage",
@@ -55,14 +54,14 @@
 
 				  }));
                   alert("Hi Message is sent...");
-               };
-				
-			ws.onmessage = function (evt) { 
-                  var received_msg = evt.data;
-                  alert("Message is received...");
-				  console.log(received_msg);
+				  test=1;
+				  }
 				 
                };
+			   
+			  
+				
+			
 			  
                ws.onclose = function() { 
                   
