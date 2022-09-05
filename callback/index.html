@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Callbaxk </title>
+		
+		<script type="text/javascript" charset="utf-8">
+		console.log(window);
+		
+		//get token
+		function getToken(){
+		var client_id='f01762fa-86e6-438e-917e-2f692d9b6577';
+		var secret_key='T6y0AG8d9G70ANppIK1qAKdtt1HQ9vVHCPlZMcHAQhc';
+			
+			// Call the API
+			// This is a POST request, because we need the API to generate a new token for us
+			fetch('https://login.mypurecloud.com/oauth/token', {
+				method: 'POST',
+				body: 'grant_type=client_credentials&client_id=' + client_id + '&client_secret=' + secret_key,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			}).then(function (resp) {
+
+				// Return the response as JSON
+				return resp.json();
+
+			}).then(function (data) {
+
+				// Log the API data
+				console.log('token', data);
+
+			}).catch(function (err) {
+
+				// Log any errors
+				console.log('something went wrong', err);
+
+			});
+		
+			
+		}
+		
+		function createCallback(){
+			console.log(document.getElementById('fname').value);
+			console.log(document.getElementById('phone').value);
+			console.log(document.getElementById('queues').value);
+			
+			//axios post request to create callback
+		
+		}
+		
+		function listQueues(){
+			//get queues and list them in dropdown
+		}
+		  
+		</script>
+	</head>
+	<body onload="getToken()">
+		<form name="callback_form" action="javascript:createCallback()">
+		  <label for="fname">First name:</label><br>
+		  <input type="text" id="fname" name="fname"><br>
+		  <label for="phone">Phone Number:</label><br>
+		  <input type="text" id="phone" name="phone"><br>
+		  <label for="queues">Please select a queue:</label><br>
+		  <select  id="queues" name="queues">
+			<option value="queue_placeholder1_id"> queue_placeholder1_name </option>
+			<option value="queue_placeholder2_id"> queue_placeholder2_name </option>
+		  </select><br>
+		  <input id="createCB" type="submit" value="Schedule Callback">
+		</form>
+
+	</body>
+</html>
