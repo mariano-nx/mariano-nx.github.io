@@ -43,6 +43,24 @@
 			
 		}
 		
+		function getToken2(){
+		var clientId='f01762fa-86e6-438e-917e-2f692d9b6577';
+		var clientSecret='T6y0AG8d9G70ANppIK1qAKdtt1HQ9vVHCPlZMcHAQhc';
+			// Genesys Cloud Authentication
+			const params = new URLSearchParams();
+			params.append('grant_type', 'client_credentials');
+
+			fetch(`https://login.mypurecloud.com/oauth/token`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': 'Basic'+ clientId + ':' + clientSecret
+			},
+			body: params
+			});
+			
+		}
+		
 		function createCallback(){
 			console.log(document.getElementById('fname').value);
 			console.log(document.getElementById('phone').value);
@@ -58,7 +76,7 @@
 		  
 		</script>
 	</head>
-	<body onload="getToken()">
+	<body onload="getToken2()">
 		<form name="callback_form" action="javascript:createCallback()">
 		  <label for="fname">First name:</label><br>
 		  <input type="text" id="fname" name="fname"><br>
