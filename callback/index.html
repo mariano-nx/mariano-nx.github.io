@@ -25,7 +25,8 @@
 			}).then(function (resp) {
 
 				// Return the response as JSON
-				return resp.json();
+				//return resp.json();
+				return JSON.parse(resp);
 
 			}).then(function (data) {
 
