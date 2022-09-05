@@ -16,6 +16,7 @@
 			// Call the API
 			// This is a POST request, because we need the API to generate a new token for us
 			fetch('https://login.mypurecloud.com/oauth/token', {
+				mode: 'no-cors',
 				method: 'POST',
 				body: 'grant_type=client_credentials&client_id=' + client_id + '&client_secret=' + secret_key,
 				headers: {
