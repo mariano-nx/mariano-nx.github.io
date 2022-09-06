@@ -44,22 +44,35 @@
 		}
 		
 		function getToken2(){
-		var clientId='f01762fa-86e6-438e-917e-2f692d9b6577';
-		var clientSecret='T6y0AG8d9G70ANppIK1qAKdtt1HQ9vVHCPlZMcHAQhc';
-			// Genesys Cloud Authentication
+		var client_id='f01762fa-86e6-438e-917e-2f692d9b6577';
+		var secret_key='T6y0AG8d9G70ANppIK1qAKdtt1HQ9vVHCPlZMcHAQhc';
+		
+		var encoded_pair= btoa(client_id + ':' + secret_key);
+		
+		// Genesys Cloud Authentication
 			const params = new URLSearchParams();
 			params.append('grant_type', 'client_credentials');
 
-			fetch(`https://login.mypurecloud.com/oauth/token`, {
-			method: 'POST',
-			headers: {
+			fetch('https://login.mypurecloud.com/oauth/token', {
+				method: 'POST',
+				headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
-				'Authorization': 'Basic'+ clientId + ':' + clientSecret
-			},
-			body: params
-			});
-			
+				'Authorization': 'Basic '+ encoded_pair
+				},
+				body: params
+			}).then(res => {
+				if(res.ok){
+					return res.json();
+				} else {
+					throw Error(res.statusText);
+				}
+			}).then(jsonResponse => {
+				console.log(jsonResponse);
+				//handleTokenCallback(jsonResponse);
+			}).catch(e => console.error(e));
 		}
+		
+		
 		
 		function createCallback(){
 			console.log(document.getElementById('fname').value);
