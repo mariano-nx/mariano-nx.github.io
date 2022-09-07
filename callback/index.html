@@ -6,71 +6,28 @@
 		<title> Demo Callbaxk </title>
 		
 		<script type="text/javascript" charset="utf-8">
-		console.log(window);
+		//console.log(window);
+		var token = "";
 		
 		//get token
 		function getToken(){
-		var client_id='f01762fa-86e6-438e-917e-2f692d9b6577';
-		var secret_key='T6y0AG8d9G70ANppIK1qAKdtt1HQ9vVHCPlZMcHAQhc';
-			
-			// Call the API
-			// This is a POST request, because we need the API to generate a new token for us
-			fetch('https://login.mypurecloud.com/oauth/token', {
-				mode: 'cors',
-				method: 'POST',
-				body: 'grant_type=client_credentials&client_id=' + client_id + '&client_secret=' + secret_key,
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				}
-			}).then(function (resp) {
+			//https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token
+			fetch('https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token').then(function (resp){
 				console.log(resp);
-				// Return the response as JSON
-				//return resp.json();
-				return JSON.parse(resp);
-
-			}).then(function (data) {
-
-				// Log the API data
-				console.log('token', data);
-
-			}).catch(function (err) {
-
-				// Log any errors
-				console.log('something went wrong', err);
-
+				return resp.json();
+			}).then(function (data){
+				console.log(data);
+				token=data.accessToken;
+				console.log(token);
+			}).catch(function (error){
+				console.log("Error: ", err);
 			});
+			
 		
 			
 		}
 		
-		function getToken2(){
-		var client_id='f01762fa-86e6-438e-917e-2f692d9b6577';
-		var secret_key='T6y0AG8d9G70ANppIK1qAKdtt1HQ9vVHCPlZMcHAQhc';
-		
-		var encoded_pair= btoa(client_id + ':' + secret_key);
-		
-		// Genesys Cloud Authentication
-			const params = new URLSearchParams();
-			params.append('grant_type', 'client_credentials');
-
-			fetch('https://login.mypurecloud.com/oauth/token', {
-				method: 'POST',
-				headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				'Authorization': 'Basic '+ encoded_pair
-				},
-				body: params
-			}).then(res => {
-				if(res.ok){
-					return res.json();
-				} else {
-					throw Error(res.statusText);
-				}
-			}).then(jsonResponse => {
-				console.log(jsonResponse);
-				//handleTokenCallback(jsonResponse);
-			}).catch(e => console.error(e));
-		}
+	
 		
 		
 		
@@ -79,12 +36,18 @@
 			console.log(document.getElementById('phone').value);
 			console.log(document.getElementById('queues').value);
 			
+			
+		
+		}
+		
+		function listQueues(){
+			//get queues and list them in dropdown
 			//fetch get queues
 			fetch('https://q31c3yeol7.execute-api.ca-central-1.amazonaws.com/test/cors-proxy/https://api.mypurecloud.com/api/v2/routing/queues?pageSize=160',{
 				method: 'get',
 				headers:{
 					'Content-Type':'application/json',
-					'Authorization':'Bearer PRaNKELXyzvr1r2SC3UTNs6uXyYZ7DjTXPlEq1y_sX_yQ4uHiCRb42BcQVGqtay_1xKjtttLmL-7yh3nf8-iRg'
+					'Authorization':'Bearer '+token
 				}
 			}).then(function (resp) {
 				console.log(resp);
@@ -103,16 +66,11 @@
 				console.log('something went wrong', err);
 
 			});
-		
 		}
-		
-		function listQueues(){
-			//get queues and list them in dropdown
-		}
-		  
+		  window.onload = getToken;
 		</script>
 	</head>
-	<body onload="getToken2()">
+	<body>
 		<form name="callback_form" action="javascript:createCallback()">
 		  <label for="fname">First name:</label><br>
 		  <input type="text" id="fname" name="fname"><br>
