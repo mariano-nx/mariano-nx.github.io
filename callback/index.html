@@ -12,7 +12,8 @@
 		//get token
 		function getToken(){
 			//https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token
-			fetch('https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token').then(function (resp){
+			fetch('https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token')
+			.then(function (resp){
 				console.log(resp);
 				return resp.json();
 			}).then(function (data){
