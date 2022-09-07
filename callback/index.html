@@ -79,7 +79,30 @@
 			console.log(document.getElementById('phone').value);
 			console.log(document.getElementById('queues').value);
 			
-			//axios post request to create callback
+			//fetch get queues
+			fetch('/api/v2/routing/queues?pageSize=160',{
+				method: 'get',
+				headers:{
+					'Content-Type':'application/json',
+					'Authorization':'Bearer PRaNKELXyzvr1r2SC3UTNs6uXyYZ7DjTXPlEq1y_sX_yQ4uHiCRb42BcQVGqtay_1xKjtttLmL-7yh3nf8-iRg'
+				}
+			}).then(function (resp) {
+				console.log(resp);
+				// Return the response as JSON
+				return resp.json();
+				
+
+			}).then(function (data) {
+
+				// Log the API data
+				console.log('data ', data);
+
+			}).catch(function (err) {
+
+				// Log any errors
+				console.log('something went wrong', err);
+
+			});
 		
 		}
 		
