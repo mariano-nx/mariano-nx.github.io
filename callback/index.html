@@ -7,10 +7,10 @@
 		
 		<script type="text/javascript" charset="utf-8">
 		//console.log(window);
-		var token = "";
+		//var token = "";
 		
 		function start(){
-			getToken();
+			//getToken();
 			listQueues();
 		}
 		
@@ -47,6 +47,21 @@
 		}
 		
 		function listQueues(){
+			var token = '';
+		
+			//get token
+			fetch('https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token')
+			.then(function (resp){
+				console.log(resp);
+				return resp.json();
+			}).then(function (data){
+				console.log(data);
+				token=data.accessToken;
+				console.log(token);
+			}).catch(function (error){
+				console.log("Error: ", error);
+			});
+		
 			//get queues and list them in dropdown
 			//fetch get queues
 			fetch('https://q31c3yeol7.execute-api.ca-central-1.amazonaws.com/test/cors-proxy/https://api.mypurecloud.com/api/v2/routing/queues?pageSize=160',{
