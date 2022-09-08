@@ -38,9 +38,56 @@
 		
 		
 		function createCallback(){
+			var name = document.getElementById('fname').value;
+			var phone = document.getElementById('phone').value;
+			var queue_id = document.getElementById('queues').value;
 			console.log(document.getElementById('fname').value);
 			console.log(document.getElementById('phone').value);
 			console.log(document.getElementById('queues').value);
+			
+			var callbackData = {
+					routingData: {
+						queueId: queue_id
+					},
+					scriptId: '29d5d6a0-6199-11e7-8dfd-3b02f841a302',
+					callbackUserName: name,
+					callbackNumbers: [
+						phone
+					],
+					data:{
+						customer_name: name
+					}
+				};
+			
+			//get token
+			fetch('https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token')
+			.then(function (resp){
+				console.log(resp);
+				return resp.json();
+			}).then(function (data){
+				//console.log(data);
+				//token=data.accessToken;
+				//console.log(token);
+				return data.accessToken;
+			}).then(function (token){
+				return fetch('https://q31c3yeol7.execute-api.ca-central-1.amazonaws.com/test/cors-proxy/https:///api/v2/conversations/callbacks',{
+				method: 'post',
+				headers:{
+					'Content-Type':'application/json',
+					'Authorization':'Bearer '+token
+				},
+				body: JSON.stringify(callbackData)
+			});
+			}).then(function (resp){
+				return resp.json();
+			}).then(function (data){
+				console.log(data);
+				
+				
+			}).catch(function (error){
+				console.log("Error: ", error);
+			});
+		
 			
 			
 		
