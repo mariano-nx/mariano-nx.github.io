@@ -6,32 +6,47 @@
 		<title> Demo Callbaxk </title>
 		
 		<script type="text/javascript" charset="utf-8">
-		//console.log(window);
-		//var token = "";
+		
 		
 		function start(){
-			//getToken();
+			
 			listQueues();
 		}
 		
-		//get token
-		function getToken(){
-			//https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token
-			fetch('https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token')
-			.then(function (resp){
-				console.log(resp);
-				return resp.json();
-			}).then(function (data){
-				console.log(data);
-				token=data.accessToken;
-				console.log(token);
-			}).catch(function (error){
-				console.log("Error: ", error);
-			});
+		function test(){
+			console.log("t")
+		}
+		
+		
 			
 		
 			
+		
+		
+		function validate(){
+			var name = document.getElementById('fname').value;
+			var phone = document.getElementById('phone').value;
+			var queue_id = document.getElementById('queues').value;
+			
+			if (!validatePhoneNumber(phone)){
+				alert("please enter a valid phone format!");
+				return false;
+			}
+			
+			if(queue_id === "Select Queue"){
+				alert("Please select a queue!");
+				return false;
+			}
+			
+			return true;			
 		}
+		
+		function validatePhoneNumber(input_str) {
+			var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+			return re.test(input_str);
+		}
+
 		
 	
 		
@@ -100,12 +115,10 @@
 			//get token
 			fetch('https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token')
 			.then(function (resp){
-				console.log(resp);
+				//console.log(resp);
 				return resp.json();
 			}).then(function (data){
-				//console.log(data);
-				//token=data.accessToken;
-				//console.log(token);
+
 				return data.accessToken;
 			}).then(function (token){
 				return fetch('https://q31c3yeol7.execute-api.ca-central-1.amazonaws.com/test/cors-proxy/https://api.mypurecloud.com/api/v2/routing/queues?pageSize=160',{
@@ -118,7 +131,7 @@
 			}).then(function (resp){
 				return resp.json();
 			}).then(function (data){
-				console.log(data.entities);
+				//console.log(data.entities);
 				var dropdown = document.getElementById('queues');
 				let defaultOption = document.createElement('option');
 				defaultOption.text = 'Select Queue';
@@ -143,25 +156,182 @@
 		</script>
 	</head>
 	<body>
-		<form name="callback_form" action="javascript:createCallback()">
+		<!--<form name="callback_form" action="javascript:test()" onsubmit="return validate()">
 		  <label for="fname">First name:</label><br>
 		  <input type="text" id="fname" name="fname" required><br>
 		  <label for="phone">Phone Number:</label><br>
-		  <input type="text" id="phone" name="phone" required><br>
+		  <input type="tel" id="phone" name="phone" required><br>
 		  <label for="queues">Please select a queue:</label><br>
-		  <select  id="queues" name="queues">
+		  <select  id="queues1" name="queues">
 		  </select><br>
-		  <input id="createCB" type="submit" value="Schedule Callback">
-		</form>
+		  <input id="createCB" class="submit" type="submit" value="Schedule Callback">
+		</form> -->
+		
+	<form class="form" name="form" action="javascript:test()" onsubmit="return validate()">
+      <div class="title">Demo</div>
+      <div class="subtitle">Callback schedule</div>
+      <div class="input-container ic1">
+        <input id="fname" class="input" type="text" placeholder=" " required />
+        <div class="cut"></div>
+        <label for="fname" class="placeholder">Name</label>
+      </div>
+      <div class="input-container ic2">
+        <input id="phone" class="input" type="text" placeholder=" " required />
+        <div class="cut"></div>
+        <label for="phone" class="placeholder">Phone Number</label>
+      </div>
+      <div class="input-container ic2">
+        <select id="queues" class="input" type="text" placeholder=" " ></select>
+        <div class="cut "></div>
+        <label for="queues" class="placeholder">Queue</>
+      </div>
+      <input id="createCB" class="submit" type="submit" value="Schedule Callback">
+    </form>
 
 	</body>
 	<style>
-		input:invalid {
-		  border: 2px dashed red;
+		
+		
+		
+		body {
+		  align-items: center;
+		  background-color: white;
+		  display: flex;
+		  justify-content: center;
+		  height: 100vh;
 		}
 
-		input:valid {
-		  border: 2px solid green;
+		.form {
+		  background-color: #CACFD2;
+		  border-radius: 20px;
+		  box-sizing: border-box;
+		  height: 500px;
+		  padding: 20px;
+		  width: 320px;
 		}
+
+		.title {
+		  color: #000000;
+		  font-family: sans-serif;
+		  font-size: 36px;
+		  font-weight: 600;
+		  margin-top: 30px;
+		}
+
+		.subtitle {
+		  color: #000000;
+		  font-family: sans-serif;
+		  font-size: 16px;
+		  font-weight: 600;
+		  margin-top: 10px;
+		}
+
+		.input-container {
+		  height: 50px;
+		  position: relative;
+		  width: 100%;
+		}
+
+		.ic1 {
+		  margin-top: 40px;
+		}
+
+		.ic2 {
+		  margin-top: 30px;
+		}
+
+		.input {
+		  background-color: #E5E7E9;
+		  border-radius: 12px;
+		  border: 0;
+		  box-sizing: border-box;
+		  color: #000000;
+		  font-size: 18px;
+		  height: 100%;
+		  outline: 0;
+		  padding: 4px 20px 0;
+		  width: 100%;
+		}
+		
+		.select {
+		  background-color: #303245;
+		  border-radius: 12px;
+		  border: 0;
+		  box-sizing: border-box;
+		  color: #eee;
+		  font-size: 18px;
+		  height: 100%;
+		  outline: 0;
+		  padding: 4px 20px 0;
+		  width: 100%;
+		}
+		
+		
+
+		.cut {
+		  background-color: #E5E7E9;
+		  border-radius: 10px;
+		  height: 20px;
+		  left: 20px;
+		  position: absolute;
+		  top: -20px;
+		  transform: translateY(0);
+		  transition: transform 200ms;
+		  width: 102px;
+		}
+
+		.cut-short {
+		  width: 50px;
+		}
+
+		.input:focus ~ .cut,
+		.input:not(:placeholder-shown) ~ .cut {
+		  transform: translateY(8px);
+		}
+
+		.placeholder {
+		  color: #000000;
+		  font-family: sans-serif;
+		  left: 20px;
+		  line-height: 14px;
+		  pointer-events: none;
+		  position: absolute;
+		  transform-origin: 0 50%;
+		  transition: transform 200ms, color 100ms;
+		  top: 20px;
+		}
+
+		.input:focus ~ .placeholder,
+		.input:not(:placeholder-shown) ~ .placeholder {
+		  transform: translateY(-30px) translateX(10px) scale(0.75);
+		}
+
+		.input:not(:placeholder-shown) ~ .placeholder {
+		  color: #000000;
+		}
+
+		.input:focus ~ .placeholder {
+		  color: #000000;
+		}
+
+		.submit {
+		  background-color: #FF8A65;
+		  border-radius: 12px;
+		  border: 0;
+		  box-sizing: border-box;
+		  color: #000000;
+		  cursor: pointer;
+		  font-size: 18px;
+		  height: 50px;
+		  margin-top: 38px;
+		  outline: 0;
+		  text-align: center;
+		  width: 100%;
+		}
+
+		.submit:active {
+		  background-color: #EDBB99;
+		}
+
 	</style>
 </html>
