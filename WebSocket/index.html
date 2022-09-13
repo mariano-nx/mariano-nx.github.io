@@ -16,8 +16,8 @@
 	  });*/
 	  
 	  function WebSocketTest() {
-            UUID="TEST1001"
-			var test=0
+            var UUID="daaee70a-3367-11ed-a261-0242ac120002";
+			var test=0;
             if ("WebSocket" in window) {
                alert("WebSocket is supported by your Browser!");
                
@@ -30,7 +30,7 @@
                   ws.send(JSON.stringify({
 					  "action": "configureSession",
 					  "deploymentId": "c11d96c6-6b74-4ab3-a22c-422375074801",
-                      "token": "00000000-0000-0000-0000-000000000001"
+                      "token": UUID
 				  }));
                   alert("Message is sent...");
                };
@@ -46,7 +46,7 @@
                   ws.send(JSON.stringify({
 					  
 				  "action": "onMessage",
-				  "token": "0000000-0000-0000-0000-0000000001",
+				  "token": UUID,
 				  "message": {
 					"type": "Text",
 					"text": "Hi"
