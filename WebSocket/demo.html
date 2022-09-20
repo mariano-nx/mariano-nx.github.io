@@ -24,8 +24,11 @@
         // add event listener reacting when message is received
         mySocket.onmessage = function (event) {
             var output = document.getElementById("output");
+			var newp = document.createElement("p");
             // put text into our output div
-            output.textContent = event.data;
+            //output.textContent = event.data;
+			newp.textContent = event.data;
+			output.append(newp);
         };
         var form = document.getElementsByClassName("foo");
         var input = document.getElementById("input");
