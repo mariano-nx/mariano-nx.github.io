@@ -17,7 +17,7 @@
 			environment: 'use1',
 			deploymentId: '09061e37-4f27-488b-bf4b-2fda4ee7bbf0'
 		  });
-		  	Genesys("subscribe", "Conversations.started", function(){
+		  	Genesys("subscribe", "Messenger.opened", function(){
 					Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
