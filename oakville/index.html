@@ -57,7 +57,7 @@
 			
 			function checkhours(){
 			
-			var Data = {
+			var hoursData = {
 				
 				orgName:"oakville",
 				region:"ca",
@@ -72,12 +72,13 @@
 				headers:{
 					'Content-Type':'application/json'
 				},
-				body: JSON.stringify(Data)
+				body: JSON.stringify(hoursData)
 			
 			}).then(function (resp){
 				return resp.json();
 			}).then(function (data){
 				console.log(data);
+				alert("got info!");
 								
 			}).catch(function (error){
 				console.log("Error: ", error);
