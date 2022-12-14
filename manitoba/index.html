@@ -26,15 +26,15 @@
 				Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
-				  name: document.getElementById('name').value,
+				  name: document.getElementById('cssp-name').value,
 			
-				  email: document.getElementById('email').value
+				  email: document.getElementById('cssp-email').value
 				  
 				}
 			  }
 			});
-			console.log(document.getElementById('name').value);
-			console.log(document.getElementById('email').value);
+			console.log(document.getElementById('cssp-name').value);
+			console.log(document.getElementById('cssp-email').value);
 			
 		},  // if resolved
 		function(o){    // if rejected
@@ -72,6 +72,22 @@
 	</body>
 	
 	<style>
+	body {
+			background-color: #fff;
+			-webkit-text-size-adjust: 100%;
+			padding: 0;
+			margin: 0;
+			
+			 
+			background: url(manitoba.PNG) no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+
+        
+		}
+	
 	cssp-login {
     display: flex;
     flex-direction: column;
@@ -114,7 +130,7 @@
     margin-bottom: 0;
     min-width: 35%;
 }
-input[type="submit"].button, input[type="reset"].button, button.button {
+input[type="submit"].button {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-size: 14px;
