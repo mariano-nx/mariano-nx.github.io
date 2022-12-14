@@ -39,7 +39,7 @@
 			});
 			console.log(document.getElementById('fname').value);
 			console.log(document.getElementById('email').value);
-			//toggleVisibility();
+			toggleVisibility();
 			document.getElementById('launchChat').value = "Close chat"
 		},  // if resolved
 		function(o){    // if rejected
@@ -55,7 +55,7 @@
 	<body>
 	
 		<form name="webchat_form" action="javascript:toggleMessenger()">
-		  <label for="fname">First name:</label><br>
+		  <label for="fname">Name:</label><br>
 		  <input type="text" id="fname" name="fname"><br>
 		  <label for="email">Email address:</label><br>
 		  <input type="text" id="email" name="email"><br>
