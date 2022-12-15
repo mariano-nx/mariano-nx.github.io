@@ -25,12 +25,9 @@
 				x[0].style.display = "none";
 			}
 		}
-
-	  function toggleMessenger(){
-		Genesys("command", "Messenger.open", {},
-		function(o){
-			
-			Genesys("command", "Database.set", {
+ function toggleMessenger(){
+    Genesys("command", "Messenger.open", {},
+      function(o){Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
 				  name: document.getElementById('name').value,
@@ -39,16 +36,13 @@
 			  }
 			});
 			console.log(document.getElementById('name').value);
-			console.log(document.getElementById('accnt').value);
-			//toggleVisibility();
-			//document.getElementById('launchChat').value = "Close chat"
-		}//,  // if resolved
-		//function(o){    // if rejected
-		//	Genesys("command", "Messenger.close");
-		//}
-		//);
-		//document.getElementById('launchChat').value = "Start chat"
-	  } 
+			console.log(document.getElementById('accnt').value);},  // if resolved
+      function(o){    // if rejected
+        Genesys("command", "Messenger.close");
+      }
+    );
+  }
+
 	
 </script>
 		
@@ -60,8 +54,10 @@
 		  <input type="text" id="name" name="name"><br>
 		  <label for="accnt">Account Number:</label><br>
 		  <input type="text" id="accnt" name="accnt"><br>
-		  <input id="launchChat" type="submit" value="Chat" onclick="toggleMessenger()">
-		</form>
+			<button id="custom-launcher" onclick="toggleMessenger()">
+				Chat
+			</button>		
+			</form>
 		
 
 	</body>
