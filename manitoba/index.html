@@ -16,60 +16,57 @@
 	  });
 	  
 	  
-
-	
 	  
-	  //left in case it needed for a custom button
-	  function launchMessenger(){
+	  function toggleVisibility() {
+			var x = document.getElementsByName("webchat_form");
+			if (x[0].style.display === "none") {
+				x[0].style.display = "block";
+			} else {
+				x[0].style.display = "none";
+			}
+		}
+
+	  function toggleMessenger(){
 		Genesys("command", "Messenger.open", {},
-		function(o){	
-				Genesys("command", "Database.set", {
+		function(o){
+			
+			Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
-				  name: document.getElementById('cssp-name').value,
-			
-				  email: document.getElementById('cssp-email').value
-				  
+				  name: document.getElementById('name').value,
+				  email: document.getElementById('accnt').value,
 				}
 			  }
 			});
-			console.log(document.getElementById('cssp-name').value);
-			console.log(document.getElementById('cssp-email').value);
-			
+			console.log(document.getElementById('name').value);
+			console.log(document.getElementById('accnt').value);
+			//toggleVisibility();
+			document.getElementById('launchChat').value = "Close chat"
 		},  // if resolved
 		function(o){    // if rejected
-			Genesys("command", "Messenger.close");			
+			Genesys("command", "Messenger.close");
 		}
 		);
-		
+		document.getElementById('launchChat').value = "Start chat"
 	  } 
 	
 </script>
 		
 	</head>
 	<body>
-
-		
-		<div id="cssp-login">
-        <form id="cssp-login-form">
-            <h2 class="form-title">Account login</h2>
-			<div class="form-group">
-                <label for="cssp-name">Name</label>
-                <input type="name" name="name" id="cssp-name" value="" required>
-            </div>
-            <div class="form-group">
-                <label for="cssp-email">Email address</label>
-                <input type="email" name="email" id="cssp-email" value="" required autocomplete="email">
-            </div>
-            <div class="form-group">
-                <input class="button" type="submit" value="Chat" onclick="launchMessenger()">
-            </div>
-            <p style="margin-bottom: -3px;">
-        </form>
-    </div>
+	
+		<form name="webchat_form" action="javascript:toggleMessenger()">
+		  <label for="name">Name:</label><br>
+		  <input type="text" id="name" name="name"><br>
+		  <label for="accnt">Account Number:</label><br>
+		  <input type="text" id="accnt" name="accnt"><br>
+		  <input id="launchChat" type="submit" value="Chat">
+		</form>
 		
 
 	</body>
+	
+</html>
 	
 	<style>
 	body {
@@ -88,82 +85,6 @@
         
 		}
 
-	cssp-login {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    left: 30px;
-    position: absolute;
-    right: 30px;
-    top: 0;
-	float:right;
-}
-	cssp-login form {
-    background: #fff;
-    box-shadow: 0 6px 8px -2px rgb(0 0 0 / 12%), 0 4px 16px rgb(0 0 0 / 14%);
-    box-sizing: border-box;
-    margin: auto;
-    padding: 32px;
-    position: relative;
-    width: 25.5em;
-    z-index: 99;
-	float:right;
-	}
-	
-	cssp-login .form-title {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    font-size: 14px;
-    font-variant-ligatures: none;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    line-height: 1.5;
-    margin: -5px 0 1em;
-	float:right;
-    text-transform: uppercase;}
-	
-	cssp-login .form-group {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-	float:right;
-    margin-bottom: 0.75em;}
-	
-	#cssp-login .form-group input[type="submit"] {
-    margin-bottom: 0;
-	float:right;
-    min-width: 35%;
-}
-input[type="submit"].button {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    font-size: 14px;
-    font-variant-ligatures: none;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    line-height: 1.71428571;
-    margin: 4px 10px 6px 0;
-    text-transform: uppercase;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: #0079c1;
-    border: 0;
-    border-radius: 3px;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    float: none;
-	float:right;
-    min-height: 44px;
-    min-width: 5em;
-    padding: 11px 19px 9px;
-    text-align: center;
-    text-decoration: none !important;
-    transition: background-color 0.1s ease-out;
-}
 	</style>
 	
 </html>
