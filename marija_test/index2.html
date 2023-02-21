@@ -11,8 +11,10 @@
 			url: "./indexoter.html",
 			success: function(result){
 				$("#chat").html(result);
+				console.log(result);
 				$("#chat").find("script").each(function(){
 					eval($(this).text());
+					console.log($(this).text());
 				});
 			}					
 		});
