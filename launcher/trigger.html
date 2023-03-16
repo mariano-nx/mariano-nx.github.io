@@ -19,6 +19,10 @@
 			deploymentId: '35bf21cd-2297-4eee-a411-4cdd3a8bcf90'
 		  });
 		  
+		  Genesys("subscribe", "Messenger.closed",function(){
+			Genesys("command", "Launcher.hide");
+		  });
+		  
 		function toggleMessenger(){
 			Genesys("command", "Messenger.open", {},
 			function(o){
@@ -29,7 +33,7 @@
 			},  // if resolved
 			function(o){    // if rejected
 				Genesys("command", "Messenger.close");
-				
+				Genesys("command", "Launcher.hide");
 			}
 			);
 			
