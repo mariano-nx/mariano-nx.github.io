@@ -3,29 +3,43 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title> Authenticated Chat </title>
-	    
-			
-		<script type="text/javascript" charset="utf-8">
-			(function (g, e, n, es, ys) {
-				g['_genesysJs'] = e;
-				g[e] = g[e] || function () {
-				(g[e].q = g[e].q || []).push(arguments)
+		<title> Login login </title>
+	    <script src="https://global.oktacdn.com/okta-auth-js/5.2.2/okta-auth-js.min.js" type="text/javascript"></script>
+		<script>
+			const oktaConfig = {
+				redirectUri: "https://mariano-nx.github.io/login/",
+				postLogoutRedirectUri: "https://mariano-nx.github.io/logout",
+				clientId: "0oa9fr37tw5etOwga5d7",
+				issuer: "https://dev-91995572.okta.com/oauth2/default",
+				scopes: ['openid', 'email', 'profile', 'offline_access'],
+				pkce: false, // default is true. Set to 'false' in case of implcit/authorization code flow
+				responseType: 'code',
+				maxAge : 35000
 			};
-			g[e].t = 1 * new Date();
-			g[e].c = es;
-			ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-			})(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
-				environment: 'prod',
-				deploymentId: '1eb4238b-5290-4faa-962d-f754be030650'
-			});
-</script>
+			const authClient = new OktaAuth(oktaConfig);		
+			
+			let oktaTransactionStorage = window.sessionStorage.getItem("okta-transaction-storage"); // Get 'okta-transaction-storage' value from session storage
 
+			if (oktaTransactionStorage) {
+			const storage = JSON.parse(oktaTransactionStorage); // Convert text in 'oktaTransactionStorage' to javascript object
+
+			if (storage && Object.keys(storage).length) { // If 'storage' is present destructure nonce from 'storage'
+				const { nonce } = storage || {};
+			}
+			}
+			
+			authClient.signInWithRedirect({
+				originalUri: window.location.href,
+				...oktaConfig
+			});
+
+			
 		</script>
+			
 	</head>
 	<body>
 	
-	<h3 id="demo">Authenticated WM</h3>
+	<h3 id="demo">Login login</h3>
 
 	</body>
 </html>
