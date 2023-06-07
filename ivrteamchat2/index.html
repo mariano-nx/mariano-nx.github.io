@@ -35,7 +35,7 @@ let test = Genesys("command", "Database.set", {
 }
 
 function messanger_open(){
-	set_data.then(
+	set_data().then(
 		(message) => {
 			if (message){
 				Genesys("command", "Messenger.open");
