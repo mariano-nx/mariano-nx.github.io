@@ -24,14 +24,15 @@
 			  Genesys("subscribe", "Conversations.started", function(){});
 			  
 			  function set_data(){
-			  setTimeout(()=> let test = Genesys("command", "Database.set", {
+			  
+			  let test = Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
 				  Test: " Testolereo1111" 
 						
 				}
 			  }
-			}),10000);
+			});
 
 		return Promise.resolve(test);
 			
@@ -49,7 +50,8 @@ function messanger_open(){
 		}
 	);
 	 */
-	 set_data();
+	 setTimeout(()=> set_data() ,10000);
+	 //set_data();
 	 Genesys("command", "Messenger.open");
 	//Genesys("command", "Messenger.open");
 }
