@@ -24,15 +24,15 @@
 			  Genesys("subscribe", "Conversations.started", function(){});
 			  
 			  function set_data(){
-			  setTimeout(()=> console.log("sleep"),10000);
-let test = Genesys("command", "Database.set", {
+			  setTimeout(()=> let test = Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
-				  Test: " Testolereo111" 
+				  Test: " Testolereo1111" 
 						
 				}
 			  }
-			});
+			}),10000);
+
 		return Promise.resolve(test);
 			
 }
