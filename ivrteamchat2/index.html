@@ -21,6 +21,8 @@
 				debug: true
 			  });
 			  
+			  Genesys("subscribe", "Conversations.started", function(){});
+			  
 			  function set_data(){
 let test = Genesys("command", "Database.set", {
 			  messaging: {
@@ -35,7 +37,7 @@ let test = Genesys("command", "Database.set", {
 }
 
 function messanger_open(){
-	set_data().then(
+	/* set_data().then(
 		(message) => {
 			if (message){
 				Genesys("command", "Messenger.open");
@@ -45,7 +47,9 @@ function messanger_open(){
 			}
 		}
 	);
-	
+	 */
+	 set_data();
+	 Genesys("command", "Messenger.open");
 	//Genesys("command", "Messenger.open");
 }
 		</script>
