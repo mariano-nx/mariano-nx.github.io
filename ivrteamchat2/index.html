@@ -24,6 +24,7 @@
 			  Genesys("subscribe", "Conversations.started", function(){});
 			  
 			  function set_data(){
+			  setTimeout(()=> console.log("sleep"),1000);
 let test = Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
