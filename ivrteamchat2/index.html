@@ -21,7 +21,16 @@
 				debug: true
 			  });
 			  
-			  Genesys("subscribe", "Conversations.started", function(){});
+			  Genesys("subscribe", "Conversations.started", function(){
+				  Genesys("command", "Database.set", {
+				  messaging: {
+					customAttributes: {
+					  Test: " Testic" 
+							
+					}
+				  }
+				});
+			});
 			  
 			  function set_data(){
 			  
@@ -38,8 +47,10 @@
 			
 }
 
+
+
 function messanger_open(){
-	/* set_data().then(
+	 set_data().then(
 		(message) => {
 			if (message){
 				Genesys("command", "Messenger.open");
@@ -49,10 +60,10 @@ function messanger_open(){
 			}
 		}
 	);
-	 */
-	 setTimeout(()=> set_data() ,10000);
+	 
+	 //setTimeout(()=> set_data() ,10000);
 	 //set_data();
-	 Genesys("command", "Messenger.open");
+	 //Genesys("command", "Messenger.open");
 	//Genesys("command", "Messenger.open");
 }
 		</script>
