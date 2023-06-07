@@ -21,7 +21,7 @@
 				debug: true
 			  });
 			  
-			  Genesys("subscribe", "Conversations.started", function(){
+			  Genesys("subscribe", "Conversations.ready", function(){
 				  Genesys("command", "Database.set", {
 				  messaging: {
 					customAttributes: {
