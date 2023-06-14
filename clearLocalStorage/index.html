@@ -22,7 +22,8 @@
 			  
 			window.addEventListener('beforeunload', function (e) {
 				//e.preventDefault();
-				localStorage.removeItem("_actmu");
+				//localStorage.removeItem("_actmu");
+				Genesys("command", "MessagingService.clearSession");  
 				//e.returnValue = '';
 			});
 		</script>
