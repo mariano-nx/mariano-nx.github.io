@@ -22,6 +22,7 @@
 			  });
 			  
 			  Genesys("subscribe", "Conversations.ready", function(){
+			  console.log("Conversation ready")
 				  Genesys("command", "Database.set", {
 				  messaging: {
 					customAttributes: {
@@ -30,6 +31,10 @@
 					}
 				  }
 				});
+			});
+			
+			Genesys("subscribe", "Messenger.ready", function(){
+				console.log("Messenger ready")
 			});
 			  
 			  function set_data(){
