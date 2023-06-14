@@ -36,6 +36,10 @@
 			Genesys("subscribe", "Messenger.ready", function(){
 				console.log("Messenger ready")
 			});
+			
+			Genesys("subscribe", "MessagingService.ready", function(){
+				console.log("Messaging Service Ready");
+			});
 			  
 			  function set_data(){
 			  
