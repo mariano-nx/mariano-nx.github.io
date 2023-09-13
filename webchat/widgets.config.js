@@ -94,7 +94,7 @@ window._genesys = {
         // email: 'praenomen.gens@calidumlitterae.com',
         // subject: 'Chat subject'
       },
-	  //"markdown":true
+	  "markdown":true
     }
   }
 };
