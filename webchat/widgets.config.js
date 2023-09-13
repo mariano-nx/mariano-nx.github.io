@@ -92,7 +92,8 @@ window._genesys = {
         // lastName: 'Gens',
         // email: 'praenomen.gens@calidumlitterae.com',
         // subject: 'Chat subject'
-      }
+      },
+	  "markdown":true
     }
   }
 };
