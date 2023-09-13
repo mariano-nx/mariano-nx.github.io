@@ -1,6 +1,7 @@
 window._genesys = {
   widgets: {
 	main: {
+		"theme" : "light",
 		preload: ['webchat'],
 	},
     webchat: {
