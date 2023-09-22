@@ -42,7 +42,9 @@
 			});
 			
 			Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
+				console.log("*************************");
 				console.log(data);
+				console.log("*************************");
 			});
 			  
 		function set_data(){
