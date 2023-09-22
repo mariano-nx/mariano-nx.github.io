@@ -21,7 +21,7 @@
 	debug:true
   });
 			  
-			  Genesys("subscribe", "Conversations.ready", function(){
+			 /* Genesys("subscribe", "Conversations.ready", function(){
 			  console.log("Conversation ready")
 				  Genesys("command", "Database.set", {
 				  messaging: {
@@ -31,7 +31,7 @@
 					}
 				  }
 				});
-			});
+			});*/
 			
 			Genesys("subscribe", "Messenger.ready", function(){
 				console.log("Messenger ready")
@@ -40,8 +40,12 @@
 			Genesys("subscribe", "MessagingService.ready", function(){
 				console.log("Messaging Service Ready");
 			});
+			
+			Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
+				console.log(data);
+			});
 			  
-			  function set_data(){
+		function set_data(){
 			  
 			  let test = Genesys("command", "Database.set", {
 			  messaging: {
