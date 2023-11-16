@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<title> IVR Team Test chat static page #2 </title>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script>
+			  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
+    };
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod',
+    deploymentId: 'b9d4aebf-6246-4935-95ef-3dfdd128f461',
+	debug:true
+  });
+			  
+			 /* Genesys("subscribe", "Conversations.ready", function(){
+			  console.log("Conversation ready")
+				  Genesys("command", "Database.set", {
+				  messaging: {
+					customAttributes: {
+					  Test: " Testic" 
+							
+					}
+				  }
+				});
+			});*/
+			
+			Genesys("subscribe", "Messenger.ready", function(){
+				console.log("Messenger ready")
+			});
+			
+			Genesys("subscribe", "MessagingService.ready", function(){
+				console.log("Messaging Service Ready");
+			});
+			
+			Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
+				console.log("*************************");
+				console.log(data);
+				console.log("*************************");
+				alert("Interaction Disconnect!");
+			});
+			  
+		function set_data(){
+			  
+			  let test = Genesys("command", "Database.set", {
+			  messaging: {
+				customAttributes: {
+				  Test: " Testolereo1111" 
+						
+				}
+			  }
+			});
+
+		return Promise.resolve(test);
+			
+}
+
+
+
+function messanger_open(){
+	 set_data().then(
+		(message) => {
+			if (message){
+				Genesys("command", "Messenger.open");
+			}
+			else{
+				console.log("Cvrc Mileva");
+			}
+		}
+	);
+	 
+	 //setTimeout(()=> set_data() ,10000);
+	 //set_data();
+	 //Genesys("command", "Messenger.open");
+	//Genesys("command", "Messenger.open");
+}
+		</script>
+	</head>
+	<body>
+	
+	<h1>IVR Team test chat #2</h1>
+	
+	</body>
+</html>
