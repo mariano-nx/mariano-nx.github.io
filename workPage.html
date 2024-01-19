@@ -17,8 +17,9 @@
 			environment: 'use1',
 			deploymentId: '09061e37-4f27-488b-bf4b-2fda4ee7bbf0'
 		  });
-		  Genesys("subscribe", "Launcher.ready", function(){
-			Genesys("command", "Launcher.show",
+		  
+		  Genesys("subscribe", "Messenger.closed", function(){
+			Genesys("command", "Launcher.hide",
 				{},
 					function() {
 						/*fulfilled callback*/
@@ -27,7 +28,6 @@
 						/*rejected callback*/
 					}
 				);
-		  
 		  });
 		  	Genesys("subscribe", "Messenger.opened", function(){
 					Genesys("command", "Database.set", {
