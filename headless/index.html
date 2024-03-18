@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Messenger</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" charset="utf-8">
+        (function (g, e, n, es, ys) {
+          g['_genesysJs'] = e;
+          g[e] = g[e] || function () {
+            (g[e].q = g[e].q || []).push(arguments)
+          };
+          g[e].t = 1 * new Date();
+          g[e].c = es;
+          ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+        })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+          environment: 'prod',
+          deploymentId: '0cfccd43-eb77-45cc-b842-45bb8fb08641'
+         // debug:true
+        });
+      </script>
+</head>
+<body>
+    <div class="main">
+        <h4>A Message You would like to pass</h4>
+
+        <!-- Input form and submission -->
+        <form class="message-form">
+            <input type="text" class="typedMessage" placeholder="Type Your Message..." autofocus>
+            <button class="submit">Send</button>
+        </form>
+
+        <!-- Output  -->
+        <h5>Message Sent</h5>
+        <div class="messagesOut"></div>
+        <h5>Message Received</h5>
+        <div class="messagesIn"></div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
