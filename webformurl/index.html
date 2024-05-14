@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URL Parameter Form Autofill</title>
+<style>
+body { font-family: Arial, sans-serif; }
+.form-container { margin: 20px; }
+label { display: block; margin-top: 10px; }
+input[type="text"] { width: 200px; line-height: 20px; }
+</style>
+</head>
+<body>
+<div class="form-container">
+<form id="myForm">
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" value="">
+
+<label for="email">Email:</label>
+<input type="text" id="email" name="email" value="">
+
+<!-- Add more form fields as needed -->
+</form>
+</div>
+
+<script>
+// Function to get the value of a query parameter by name
+function getQueryParam(name) {
+const urlParams = new URLSearchParams(window.location.search);
+return urlParams.get(name);
+}
+
+// Function to fill the form with URL parameters
+function fillFormWithParams() {
+document.getElementById('name').value = getQueryParam('name') || '';
+document.getElementById('email').value = getQueryParam('email') || '';
+// Fill other form fields in a similar way
+}
+
+// Call the function to fill the form when the page loads
+window.onload = fillFormWithParams;
+</script>
+</body>
+</html>
