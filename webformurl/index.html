@@ -23,6 +23,9 @@ input[type="text"] { width: 200px; line-height: 20px; }
 <label for="Address">Address:</label>
 <input type="text" id="Address" name="Address" value="">
 
+<label for="province">province:</label>
+<input type="text" id="province" name="province" value="">
+
 <label for="city">city:</label>
 <input type="text" id="city" name="city" value="">
 <!-- Add more form fields as needed -->
@@ -41,6 +44,7 @@ function fillFormWithParams() {
 document.getElementById('name').value = getQueryParam('name') || '';
 document.getElementById('zipcode').value = getQueryParam('zipcode') || '';
 document.getElementById('Address').value = getQueryParam('Address') || '';
+document.getElementById('province').value = getQueryParam('province') || '';
 document.getElementById('city').value = getQueryParam('city') || '';
 // Fill other form fields in a similar way
 }
