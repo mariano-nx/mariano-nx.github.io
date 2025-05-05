@@ -449,6 +449,41 @@
 					if (!sClientId) document.getElementById('authClientId').classList.add('is-invalid');
 					if (!sOktaurl) document.getElementById('oktaURL').classList.add('is-invalid');
 				}
+				AuthProvider.registerCommand('signIn', (e) => { 
+
+// This command will let Messenger know that the user is not signed-in yet (although Messenger is initialized) and it can now try to sign-in later. 
+// Write your logic here to trigger the login process by gathering the user credentials from your preferred location.
+// Messenger calls this command when Step-up conversation is enabled. 
+
+const { forceUpdate } = e.data || {};
+	if (forceUpdate) {
+		ndAuthLoginBtn.click(); // simulate the login click.
+		e.resolve();
+	} else {
+		const sData = {
+			authCode: brandAuthCode,
+			redirectUri: `${sRedirectURL}`,
+			nonce: sNonce,
+		};
+
+		if (maxAge) sData.maxAge = parseInt(maxAge);
+		if (bPKCE && verifier) sData.codeVerifier = verifier;
+
+		e.resolve(sData);
+	}
+
+				if (signedInSuccessfully || bAuthenticated) {
+
+					AuthProvider.publish('signedIn', data); // REQUIRED event {authCode: xxx, ...} to let Auth plugin know so it can re-initialize Messenger with authenticated details.
+
+					e.resolve(data);   // where 'data' is as discussed in the return data section here - https://developer.genesys.cloud/commdigital/digital/webmessaging/messengersdk/SDKCommandsEvents/authProviderPlugin#authprovider-signin
+
+				} else {
+
+					AuthProvider.publish('signInFailed', error); // REQUIRED event to let Messenger know that sign-in failed so it can reset its UI state.
+
+				}
+				});
 			}
 
 			function clearStorage() {
@@ -519,41 +554,7 @@
 					}
 				});*/
 
-				AuthProvider.registerCommand('signIn', (e) => { 
-
-				// This command will let Messenger know that the user is not signed-in yet (although Messenger is initialized) and it can now try to sign-in later. 
-				// Write your logic here to trigger the login process by gathering the user credentials from your preferred location.
-				// Messenger calls this command when Step-up conversation is enabled. 
-
-				const { forceUpdate } = e.data || {};
-					if (forceUpdate) {
-						ndAuthLoginBtn.click(); // simulate the login click.
-						e.resolve();
-					} else {
-						const sData = {
-							authCode: brandAuthCode,
-							redirectUri: `${sRedirectURL}`,
-							nonce: sNonce,
-						};
-
-						if (maxAge) sData.maxAge = parseInt(maxAge);
-						if (bPKCE && verifier) sData.codeVerifier = verifier;
-
-						e.resolve(sData);
-					}
-
-				if (signedInSuccessfully || bAuthenticated) {
-
-					AuthProvider.publish('signedIn', data); // REQUIRED event {authCode: xxx, ...} to let Auth plugin know so it can re-initialize Messenger with authenticated details.
-
-					e.resolve(data);   // where 'data' is as discussed in the return data section here - https://developer.genesys.cloud/commdigital/digital/webmessaging/messengersdk/SDKCommandsEvents/authProviderPlugin#authprovider-signin
-
-				} else {
-
-					AuthProvider.publish('signInFailed', error); // REQUIRED event to let Messenger know that sign-in failed so it can reset its UI state.
-
-				}
-				});
+		
 
 				AuthProvider.registerCommand('reAuthenticate', (e) => {
 					// Brand can handle this how ever they want.
