@@ -449,7 +449,7 @@
 					if (!sClientId) document.getElementById('authClientId').classList.add('is-invalid');
 					if (!sOktaurl) document.getElementById('oktaURL').classList.add('is-invalid');
 				}
-				AuthProvider.registerCommand('signIn', (e) => { 
+				/*AuthProvider.registerCommand('signIn', (e) => { 
 
 // This command will let Messenger know that the user is not signed-in yet (although Messenger is initialized) and it can now try to sign-in later. 
 // Write your logic here to trigger the login process by gathering the user credentials from your preferred location.
@@ -483,7 +483,7 @@ const { forceUpdate } = e.data || {};
 					AuthProvider.publish('signInFailed', error); // REQUIRED event to let Messenger know that sign-in failed so it can reset its UI state.
 
 				}
-				});
+				});*/
 			}
 
 			function clearStorage() {
@@ -535,7 +535,7 @@ const { forceUpdate } = e.data || {};
 
 				/* Register Commands */
 
-				/*AuthProvider.registerCommand('getAuthCode', (e) => {
+				AuthProvider.registerCommand('getAuthCode', (e) => {
 					const { forceUpdate } = e.data || {};
 					if (forceUpdate) {
 						ndAuthLoginBtn.click(); // simulate the login click.
@@ -552,7 +552,7 @@ const { forceUpdate } = e.data || {};
 
 						e.resolve(sData);
 					}
-				});*/
+				});
 
 		
 
