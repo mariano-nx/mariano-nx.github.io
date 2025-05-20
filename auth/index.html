@@ -19,6 +19,102 @@
               deploymentId: '31748380-59c6-4a5c-b496-327be5d3d8b7'
             });
           </script>
+          <script  defer>
+               var authCode="";
+               var redirectUri="";
+               var nonce="";
+               var maxAge="";
+               var codeVerifier="";
+               var iss="";
+              Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
+
+                // COMMAND
+                // *********
+                // getAuthCode
+                // reAuthenticate
+                // signIn
+
+                // EVENTS
+                // *********
+                // signedIn
+                // signInFailed
+
+                /* Register Command - mandatory */
+
+                AuthProvider.registerCommand('getAuthCode', (e) => {
+
+                // Add the necessary logic and resolve with the authCode and redirectUri provided by your Authentication provider. Messenger will call this command to get the the tokens.
+                   
+
+                    e.resolve({
+                        authCode: authCode,       // pass your authorization code here
+                        redirectUri: redirectUri,  // pass the redirection URI configured in your Authentication provider here
+                        nonce: nonce,               // pass the random string preferably in uuid format. Applicable for OKTA provider.
+                        maxAge: maxAge,             // pass elapsed time in seconds. Applicable for OKTA provider and it is an optional parameter.
+                        codeVerifier: codeVerifier, // pass your code verifier here when PKCE flow is enabled
+                        iss: iss                   // pass your iss here. It is an optional parameter provided in the authorization response by your Authentication provider.
+                    });
+                });
+
+                AuthProvider.registerCommand('reAuthenticate', (e) => {
+                
+                // Messenger will call this command when current refreshToken and/or authCode are no more valid. Brand can add logic here to simply re-login and resolve this command after successful login so that Messenger can get the new authCode. (In case when browser needs to reload for a login, there is no need to resolve this command). Note: After a successful re-login, calling the getAuthCode command is taken care internally and there is no need to call it explicitly again.
+
+                document.getElementById('myLoginButton').click(); // simulate the login button click
+                e.resolve();
+                });
+
+                /* Register Command - optional */
+
+                AuthProvider.registerCommand('signIn', (e) => { 
+
+                // This command will let Messenger know that the user is not signed-in yet (although Messenger is initialized) and it can now try to sign-in later. 
+                // Write your logic here to trigger the login process by gathering the user credentials from your preferred location.
+                // Messenger calls this command when Step-up conversation is enabled. 
+
+                if (signedInSuccessfully) {
+
+                    AuthProvider.publish('signedIn', data); // REQUIRED event {authCode: xxx, ...} to let Auth plugin know so it can re-initialize Messenger with authenticated details.
+
+                    e.resolve(data);   // where 'data' is as discussed in the return data section here - https://developer.genesys.cloud/commdigital/digital/webmessaging/messengersdk/SDKCommandsEvents/authProviderPlugin#authprovider-signin
+
+                } else {
+
+                    AuthProvider.publish('signInFailed', error); // REQUIRED event to let Messenger know that sign-in failed so it can reset its UI state.
+                
+                }
+                });
+
+                /* Subscribe to Auth plugin events */
+
+                AuthProvider.subscribe('Auth.loggedOut', () => {
+                // This event is published across the browser tabs/devices where the user is logged in, so you can do something on logout.
+                    // For example, clear any authenticated flags that you might have set during login.
+                });
+
+                /* Subscribe to Auth plugin events - optional */
+
+                AuthProvider.subscribe('Auth.authError', (error) => {
+
+                // This event is published across the browser tabs/devices where the user is logged in, so you can do something on logout.
+                // For example, clear any authenticated flags that you might have set during login.
+                });
+
+                /* Click Handlers */
+
+                // Handle logout
+                document.getElementById('myButton').onclick = function () {
+
+                AuthProvider.command('Auth.logout').then(() => {
+                    // Do something on logout.
+                    // For example, clear any authenticated flags that you might have set on login
+                });
+                };
+
+                // Tell Messenger that your plugin is ready (mandatory)
+                AuthProvider.ready();
+                });
+          </script>
 	</head>
 	<body>
 	<h1>Auth test </h1>
