@@ -17,27 +17,38 @@
     environment: 'use1',
     deploymentId: '1250be9f-31f5-4095-ad48-1100e92ee949'
   });
-  
-Genesys('subscribe', 'MessagingService.messagesReceived', function({ data }) {
+   
+   const connected = false;
+	Genesys('subscribe', 'MessagingService.messagesReceived', function({ data }) {
 
-    // Loop through the messages received in the event
-    data.messages.forEach(function(message) {
-      
-      // Check if this message is the specific disconnect event
-      if (message.direction === 'Outbound' ) {
-        
+ 
+		data.messages.forEach(function(message) {  
 
-          
-          const whoEndedTheChat = message.originatingEntity;
-if (whoEndedTheChat === 'Human') {
-console.log("human");
-} //ne smeju da pusuhuju svaki put odgovor
-		  
-		  }
-		  }
-		  )
-		  }
-		  );
+		  if(!connected){
+		  if (message.direction === 'Outbound' ) {
+			const agent = message.originatingEntity;
+				if (agent === 'Human') {
+				 connected=true; //add push to google tag here
+				 console.log("agent entered the chat");
+				}	  
+			  }
+			}  
+		
+
+		  if (message.type === 'Event' && message.events) {
+			const disconnectEvent = message.events.find(e => e.eventType === 'Presence' && e.presence.type === 'Disconnect');			
+
+			if (disconnectEvent) {
+				//revert back connected to false since they are disconnected
+				console.log("disconnected");
+				connected=false;
+		
+			  }
+			  }
+			  }
+			  )
+			  }
+			  );
 
 </script>
 
