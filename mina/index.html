@@ -20,6 +20,9 @@
   
 Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
     console.log(data);
+	const whoEndedTheChat = data.originatingEntity;
+
+	console.log("The conversation was disconnected by:", whoEndedTheChat);
 });
   
 </script>
