@@ -29,10 +29,12 @@ Genesys('subscribe', 'MessagingService.messagesReceived', function({ data }) {
         
         // If we found the disconnect event inside the message...
         if (disconnectEvent) {
-          console.log('SUCCESS! Correct disconnect event object found:', message);
+
           
           const whoEndedTheChat = message.originatingEntity;
-          console.log('Conversation was ended by:', whoEndedTheChat);
+if (whoEndedTheChat === 'Human') {
+console.log("human");
+
 		  }
 		  }
 		  }
