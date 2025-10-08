@@ -24,18 +24,15 @@ Genesys('subscribe', 'MessagingService.messagesReceived', function({ data }) {
     data.messages.forEach(function(message) {
       
       // Check if this message is the specific disconnect event
-      if (message.type === 'Event' && message.events) {
-        const disconnectEvent = message.events.find(e => e.eventType === 'Presence' && e.presence.type === 'Disconnect');
+      if (message.direction === 'Outbound' ) {
         
-        // If we found the disconnect event inside the message...
-        if (disconnectEvent) {
 
           
           const whoEndedTheChat = message.originatingEntity;
 if (whoEndedTheChat === 'Human') {
 console.log("human");
-
-		  }
+} //ne smeju da pusuhuju svaki put odgovor
+		  
 		  }
 		  }
 		  )
