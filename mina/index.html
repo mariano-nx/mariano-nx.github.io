@@ -18,16 +18,26 @@
     deploymentId: '1250be9f-31f5-4095-ad48-1100e92ee949'
   });
   
-Genesys("subscribe", "MessagingService.conversationDisconnected", function({event}){
-   // This specific log is the only one we need to look at.
-  console.log("This is the TRUE disconnect event object:", event);
+Genesys('subscribe', 'MessagingService.messagesReceived', function({ data }) {
 
-  let whoEndedTheChat;
- whoEndedTheChat = event.message.originatingEntity;
-    
-    console.log("SUCCESS! Found the value:", whoEndedTheChat);
-});
-  
+    // Loop through the messages received in the event
+    data.messages.forEach(function(message) {
+      
+      // Check if this message is the specific disconnect event
+      if (message.type === 'Event' && message.events) {
+        const disconnectEvent = message.events.find(e => e.eventType === 'Presence' && e.presence.type === 'Disconnect');
+        
+        // If we found the disconnect event inside the message...
+        if (disconnectEvent) {
+          console.log('SUCCESS! Correct disconnect event object found:', message);
+          
+          const whoEndedTheChat = message.originatingEntity;
+          console.log('Conversation was ended by:', whoEndedTheChat);
+		  }
+		  }
+		  }
+		  }
+
 </script>
 
 
