@@ -18,7 +18,7 @@
     deploymentId: '1250be9f-31f5-4095-ad48-1100e92ee949'
   });
    
-   const connected = false;
+   let connected = false;
 	Genesys('subscribe', 'MessagingService.messagesReceived', function({ data }) {
 
  
@@ -26,7 +26,7 @@
 
 		  if(!connected){
 		  if (message.direction === 'Outbound' ) {
-			const agent = message.originatingEntity;
+			let agent = message.originatingEntity;
 				if (agent === 'Human') {
 				 connected=true; //add push to google tag here
 				 console.log("agent entered the chat");
@@ -36,7 +36,7 @@
 		
 
 		  if (message.type === 'Event' && message.events) {
-			const disconnectEvent = message.events.find(e => e.eventType === 'Presence' && e.presence.type === 'Disconnect');			
+			let disconnectEvent = message.events.find(e => e.eventType === 'Presence' && e.presence.type === 'Disconnect');			
 
 			if (disconnectEvent) {
 				//revert back connected to false since they are disconnected
