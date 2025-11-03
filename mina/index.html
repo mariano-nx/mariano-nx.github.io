@@ -18,38 +18,19 @@
     deploymentId: '1250be9f-31f5-4095-ad48-1100e92ee949'
   });
    
-   let connected = false;
-	Genesys('subscribe', 'MessagingService.messagesReceived', function({ data }) {
+  let currentConversationId = null;
 
- 
-		data.messages.forEach(function(message) {  
-
-		  if(!connected){
-		  if (message.direction === 'Outbound' ) {
-			let agent = message.originatingEntity;
-				if (agent === 'Human') {
-				 connected=true; //add push to google tag here
-				 console.log("agent entered the chat");
-				}	  
-			  }
-			}  
-		
-
-		  if (message.type === 'Event' && message.events) {
-			let disconnectEvent = message.events.find(e => e.eventType === 'Presence' && e.presence.type === 'Disconnect');			
-
-			if (disconnectEvent) {
-				//revert back connected to false since they are disconnected
-				console.log("disconnected");
-				connected=false;
-		
-			  }
-			  }
-			  }
-			  )
-			  }
-			  );
-
+// This event fires ONCE when the conversation is created
+Genesys('subscribe', 'MessagingService.conversationStarted', function({ data }) {
+    
+    currentConversationId = data.conversationId;
+    console.log("--- CONVERSATION STARTED ---");
+    console.log("Conversation ID:", currentConversationId);
+    console.log("Full conversation data:", data);
+    
+    // You could also get the read-only participant ID for the guest here
+    // const guestParticipantId = data.self.id;
+});
 </script>
 
 
