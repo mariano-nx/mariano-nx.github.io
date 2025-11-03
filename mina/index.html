@@ -18,21 +18,23 @@
     deploymentId: '1250be9f-31f5-4095-ad48-1100e92ee949'
   });
    
-  let currentConversationId = null;
-
-// This event fires ONCE when the conversation is created
+ var connected = false;
 Genesys('subscribe', 'MessagingService.messagesReceived' , function(eventObject) {
 
 var data = eventObject.data;
-        console.log("Full conversation data:", data);
-    currentConversationId = data.conversationId;
-    console.log("--- CONVERSATION STARTED ---");
-    console.log("Conversation ID:", currentConversationId);
 
-    
-    // You could also get the read-only participant ID for the guest here
-    // const guestParticipantId = data.self.id;
-});
+
+	data.messages.forEach(function(message) {  
+
+	  if(!connected){
+	 
+			 connected=true; //ADD PUSH TO DATA LAYER IN THIS NESTED IF
+			 var messageidd= messages[0].channel.messageId;
+			 console.log(messageidd);
+			}	  
+		  }
+		}  
+	
 </script>
 
 
