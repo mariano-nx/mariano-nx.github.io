@@ -21,14 +21,14 @@
   let currentConversationId = null;
 
 // This event fires ONCE when the conversation is created
-Genesys("subscribe", "MessagingService.started", function({data}){
-  console.log(data)
+Genesys('subscribe', 'MessagingService.messagesReceived' , function(eventObject) {
 
-    
+var data = eventObject.data;
+        console.log("Full conversation data:", data);
     currentConversationId = data.conversationId;
     console.log("--- CONVERSATION STARTED ---");
     console.log("Conversation ID:", currentConversationId);
-    console.log("Full conversation data:", data);
+
     
     // You could also get the read-only participant ID for the guest here
     // const guestParticipantId = data.self.id;
