@@ -27,7 +27,7 @@ var data = eventObject.data;
 	data.messages.forEach(function(message) {  
 
 	  if(!connected){
-	 
+	  console.log(message);
 			 connected=true; //ADD PUSH TO DATA LAYER IN THIS NESTED IF
 			 var messageidd= message.channel.messageId;
 			 console.log(messageidd);
