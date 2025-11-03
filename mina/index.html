@@ -21,7 +21,9 @@
   let currentConversationId = null;
 
 // This event fires ONCE when the conversation is created
-Genesys('subscribe', 'MessagingService.conversationStarted', function({ data }) {
+Genesys("subscribe", "MessagingService.started", function({data}){
+  console.log(data)
+
     
     currentConversationId = data.conversationId;
     console.log("--- CONVERSATION STARTED ---");
