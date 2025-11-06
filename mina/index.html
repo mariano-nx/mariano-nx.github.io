@@ -17,23 +17,40 @@
     environment: 'use1',
     deploymentId: '1250be9f-31f5-4095-ad48-1100e92ee949'
   });
-   
- var connected = false;
-Genesys('subscribe', 'MessagingService.messagesReceived' , function(eventObject) {
+ 		Genesys("subscribe", "MessagingService.conversationCleared", function() {
+				
+				});
+		Genesys("subscribe", "MessagingService.conversationDisconnected", function(){
+               Genesys('command', 'Toaster.show', {
+          type: 'info',
+          title: 'Chat Ended',
+          message: 'Would you fill in the survey?',
+          icon: 'robot', // You can also use 'chat'
 
-var data = eventObject.data;
+          // Define the buttons on the pop-up
+          actions: [
+            {
+              // This button will start a new chat
+              text: 'Chat with Bot',
 
+              // The command to run when the button is clicked
+              command: 'MessagingService.startConversation',
 
-	data.messages.forEach(function(message) {  
-
-	  if(!connected){
-	  console.log(message);
-			 connected=true; //ADD PUSH TO DATA LAYER IN THIS NESTED IF
-			 var messageidd= message.id;
-			 console.log(messageidd);
-			}	  
-		  })
-		})  
+              // Parameters for the 'startConversation' command.
+              // We pass a custom attribute that your Architect flow can read.
+             Genesys("command", "Database.set", {
+					messaging: {
+						customAttributes: {
+							startchat: "true"//replace test values with your variables
+						
+					  }
+					}
+				  })
+            }
+            // A "dismiss" (X) button is included by default
+          ]
+        });
+                });
 	
 </script>
 
