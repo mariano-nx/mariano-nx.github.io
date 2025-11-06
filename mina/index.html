@@ -43,40 +43,6 @@ Genesys("subscribe", "MessagingService.conversationDisconnected", function(event
   );
 });
 
-// Step 3: Handle when user accepts (clicks "Continue with Bot")
-Genesys("subscribe", "Toaster.accepted", function(event) {
-  console.log("User accepted toaster", event);
-  
-  // Start a new conversation that routes to bot flow
-  Genesys(
-    "command",
-    "Messenger.open",
-    {},
-    function() {
-      console.log("Messenger opened");
-      
-      // Optionally send an initial message to trigger bot flow
-      // This depends on how your bot flow is configured
-      Genesys(
-        "command",
-        "MessagingService.sendMessage",
-        {
-          message: "Start bot" // Or your trigger phrase
-        },
-        function() {
-          console.log("Message sent to start bot flow");
-        },
-        function(error) {
-          console.error("Error sending message:", error);
-        }
-      );
-    },
-    function(error) {
-      console.error("Error opening messenger:", error);
-    }
-  );
-});
-
 // Step 4: Handle when user declines (clicks "No Thanks")
 Genesys("subscribe", "Toaster.declined", function(event) {
   console.log("User declined toaster", event);
@@ -99,7 +65,32 @@ Genesys("subscribe", "Toaster.declined", function(event) {
 // or set up a specific flow for post-disconnect scenarios
 
 // Example: Direct routing to specific bot flow using custom attributes
-
+Genesys("subscribe", "Toaster.accepted", function(event) {
+  console.log("User accepted - routing to bot flow");
+  
+  // Close existing messenger first
+  Genesys("command", "Messenger.close", {});
+  
+  // Wait a moment then reopen with fresh session
+  setTimeout(function() {
+    Genesys(
+      "command",
+      "Messenger.open",
+      {
+        customAttributes: {
+          routeToBotFlow: "true", // Custom attribute for flow routing
+          previousConversationType: "agent"
+        }
+      },
+      function() {
+        console.log("New conversation started with bot routing");
+      },
+      function(error) {
+        console.error("Error starting bot conversation:", error);
+      }
+    );
+  }, 500);
+});
 </script>
 
 
