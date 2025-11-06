@@ -17,41 +17,89 @@
     environment: 'use1',
     deploymentId: '1250be9f-31f5-4095-ad48-1100e92ee949'
   });
- 		Genesys("subscribe", "MessagingService.conversationCleared", function() {
-				
-				});
-		Genesys("subscribe", "MessagingService.conversationDisconnected", function(){
-               Genesys('command', 'Toaster.show', {
-          type: 'info',
-          title: 'Chat Ended',
-          message: 'Would you fill in the survey?',
-          icon: 'robot', // You can also use 'chat'
+ 	// Step 1: Subscribe to the conversation disconnect event
+Genesys("subscribe", "MessagingService.conversationDisconnected", function(event) {
+  console.log("Conversation disconnected", event);
+  
+  // Step 2: Show the Toaster popup after disconnect
+  Genesys(
+    "command",
+    "Toaster.open",
+    {
+      title: "Chat Ended",
+      body: "Would you like to continue with our automated assistant?",
+      buttons: {
+        type: "binary", // Two buttons
+        primary: "Continue with Bot", // Accept button
+        secondary: "No Thanks" // Decline button
+      }
+    },
+    function() {
+      console.log("Toaster opened successfully");
+    },
+    function(error) {
+      console.error("Error opening toaster:", error);
+    }
+  );
+});
 
-          // Define the buttons on the pop-up
-          actions: [
-            {
-              // This button will start a new chat
-              text: 'Chat with Bot',
+// Step 3: Handle when user accepts (clicks "Continue with Bot")
+Genesys("subscribe", "Toaster.accepted", function(event) {
+  console.log("User accepted toaster", event);
+  
+  // Start a new conversation that routes to bot flow
+  Genesys(
+    "command",
+    "Messenger.open",
+    {},
+    function() {
+      console.log("Messenger opened");
+      
+      // Optionally send an initial message to trigger bot flow
+      // This depends on how your bot flow is configured
+      Genesys(
+        "command",
+        "MessagingService.sendMessage",
+        {
+          message: "Start bot" // Or your trigger phrase
+        },
+        function() {
+          console.log("Message sent to start bot flow");
+        },
+        function(error) {
+          console.error("Error sending message:", error);
+        }
+      );
+    },
+    function(error) {
+      console.error("Error opening messenger:", error);
+    }
+  );
+});
 
-              // The command to run when the button is clicked
-              command: 'MessagingService.startConversation'
+// Step 4: Handle when user declines (clicks "No Thanks")
+Genesys("subscribe", "Toaster.declined", function(event) {
+  console.log("User declined toaster", event);
+  // Optionally close the toaster
+  Genesys(
+    "command",
+    "Toaster.close",
+    {},
+    function() {
+      console.log("Toaster closed");
+    },
+    function(error) {
+      console.error("Error closing toaster:", error);
+    }
+  );
+});
 
-              // Parameters for the 'startConversation' command.
-              // We pass a custom attribute that your Architect flow can read.
-             Genesys("command", "Database.set", {
-					messaging: {
-						customAttributes: {
-							startchat: "true"//replace test values with your variables
-						
-					  }
-					}
-				  })
-            }
-            // A "dismiss" (X) button is included by default
-          ]
-        });
-                });
-	
+// Alternative: If you want to directly start a new conversation with bot flow
+// You can configure your Architect flow to route to bot based on message content
+// or set up a specific flow for post-disconnect scenarios
+
+// Example: Direct routing to specific bot flow using custom attributes
+
 </script>
 
 
