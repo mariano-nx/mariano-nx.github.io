@@ -17,86 +17,54 @@
     environment: 'use1',
     deploymentId: '1250be9f-31f5-4095-ad48-1100e92ee949'
   });
- 	// Step 1: Subscribe to the conversation disconnect event
-Genesys("subscribe", "MessagingService.conversationDisconnected", function(event) {
-  console.log("Conversation disconnected", event);
-  
-  // Step 2: Show the Toaster popup after disconnect
-  Genesys(
-    "command",
-    "Toaster.open",
-    {
-      title: "Chat Ended",
-      body: "Would you like to continue with our automated assistant?",
-      buttons: {
-        type: "binary", // Two buttons
-        primary: "Continue with Bot", // Accept button
-        secondary: "No Thanks" // Decline button
-      }
-    },
-    function() {
-      console.log("Toaster opened successfully");
-    },
-    function(error) {
-      console.error("Error opening toaster:", error);
+	Genesys('subscribe', 'Conversations.opened', function (){
+				Genesys("command", "Database.set", {
+					messaging: {
+						customAttributes: {
+						firstName: 'Maki',
+						lastName: 'Doe',
+						email: 'user@hydroottawa.com',
+						accountNumber: 1234567890,
+						language: 'EN',
+						url: window.location.href,
+						utm_source: 'google',
+						utm_medium: 'email',
+						utm_campaign: 'get_in_touch',
+						utm_term: 'connect_with_us',
+						utm_content: 'chat_button',
+						}
+					}
+				});
+			});
+			
+				  Genesys("subscribe", "Messenger.ready", function() {
+		  document.getElementById("custom-launcher").style.display = "block";
+		}); 
+			
+	  function openMessenger() {
+      Genesys("command", "Messenger.open");
     }
-  );
-});
-
-// Step 4: Handle when user declines (clicks "No Thanks")
-Genesys("subscribe", "Toaster.declined", function(event) {
-  console.log("User declined toaster", event);
-  // Optionally close the toaster
-  Genesys(
-    "command",
-    "Toaster.close",
-    {},
-    function() {
-      console.log("Toaster closed");
-    },
-    function(error) {
-      console.error("Error closing toaster:", error);
-    }
-  );
-});
-
-// Alternative: If you want to directly start a new conversation with bot flow
-// You can configure your Architect flow to route to bot based on message content
-// or set up a specific flow for post-disconnect scenarios
-
-// Example: Direct routing to specific bot flow using custom attributes
-Genesys("subscribe", "Toaster.accepted", function(event) {
-  console.log("User accepted - routing to bot flow");
-  
-  // Close existing messenger first
-  Genesys("command", "Messenger.close", {});
-  
-  // Wait a moment then reopen with fresh session
-  setTimeout(function() {
-    Genesys(
-      "command",
-      "Messenger.open",
-      {
-        customAttributes: {
-          routeToBotFlow: "true", // Custom attribute for flow routing
-          previousConversationType: "agent"
-        }
-      },
-      function() {
-        console.log("New conversation started with bot routing");
-      },
-      function(error) {
-        console.error("Error starting bot conversation:", error);
-      }
-    );
-  }, 500);
-});
-</script>
-
-
+			
+		  </script>
 	</head>
-	<body>
+		<body>
 
+		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="icon.svg"> </button>
+	<style>
+
+#custom-launcher{
+	background-color:transparent;
+	border:none;
+    position: fixed;
+    bottom: 70px;
+    right: 30px;
+	height: 90px;
+	width: 90px;
+	cursor: pointer;
+	display: none;
+}
+
+	</style>
 	</body>
-
+	
 </html>
