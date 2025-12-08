@@ -46,15 +46,15 @@
       Genesys("command", "Messenger.open");
     }
 	function clearGenesysConversation() {
-    Genesys("command", "MessagingService.clearConversation" {}, 
-    function() {
-    /*fulfilled callback*/
-    },
-    function() {
-    /*rejected callback*/
-    });
+    Genesys("command", "MessagingService.clearConversation", {}, 
+			function() {
+			/*fulfilled callback*/
+			},
+			function() {
+			/*rejected callback*/
+			});
     // Cleans localStorage
-}
+};
 			
 		  </script>
 	</head>
