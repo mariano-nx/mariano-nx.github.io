@@ -47,37 +47,30 @@
       Genesys("command", "Messenger.open");
     }
 function getTranscript() {
-    // 1. Prvo izvlačimo poruke
+    // 1. Prvo izvlačimo poruke ;
     Genesys("command", "MessagingService.messagesReceived", {}, (data) => {
         if (data.messages && data.messages.length > 0) {
-            const firstMessageId = data.messages[0].id;
-            console.log("Prvi Message ID:", firstMessageId);
+            // Uzimamo ID poslednje poruke (on sigurno postoji u objektu poruke)
+            const lastMessageId = data.messages[data.messages.length - 1].id;
+            console.log("Šaljem Message ID Lambdi:", lastMessageId);
 
-            // 2. Izvlačimo Conversation ID
-            Genesys("command", "MessagingService.getConversation", {}, (convData) => {
-                const conversationId = convData.id;
-                const apiGatewayUrl = 'https://lon6l2voxsinnhpai3xxzsrvx40hwbfs.lambda-url.ca-central-1.on.aws/';
+            const apiGatewayUrl = 'https://lon6l2voxsinnhpai3xxzsrvx40hwbfs.lambda-url.ca-central-1.on.aws/';
 
-                fetch(apiGatewayUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ convId: conversationId })
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Greška na serveru');
-                    return response.json();
-                })
-                .then(result => {
-                    if(result.transcriptUrl) {
-                        window.open(result.transcriptUrl, '_blank');
-                    } else {
-                        alert("Transkript još nije spreman. Pokušajte čim se chat završi.");
-                    }
-                })
-                .catch(err => console.error("Greška pri pozivu Lambde:", err));
-            }); // Zatvara MessagingService.getConversation
-        } else {
-            alert("no messages");
+            fetch(apiGatewayUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                // Šaljemo messageId
+                body: JSON.stringify({ msgId: lastMessageId })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.transcriptUrl) {
+                    window.open(result.transcriptUrl, '_blank');
+                } else {
+                    alert("Transkript još nije generisan.");
+                }
+            })
+            .catch(err => console.error("Greška:", err));
         }
     }); // Zatvara MessagingService.getMessages
 } // Zatvara getTranscript
