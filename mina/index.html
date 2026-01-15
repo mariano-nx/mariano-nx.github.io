@@ -48,7 +48,7 @@
     }
 function getTranscript() {
     // 1. Prvo izvlačimo poruke
-    Genesys("command", "MessagingService.getMessages", {}, (data) => {
+    Genesys("command", "MessagingService.messagesReceived", {}, (data) => {
         if (data.messages && data.messages.length > 0) {
             const firstMessageId = data.messages[0].id;
             console.log("Prvi Message ID:", firstMessageId);
