@@ -40,27 +40,55 @@
 			
 				  Genesys("subscribe", "Messenger.ready", function() {
 		  document.getElementById("custom-launcher").style.display = "block";
+		  document.getElementById("transcript-btn").style.display = "block";
 		}); 
 			
 	  function openMessenger() {
       Genesys("command", "Messenger.open");
     }
-	function clearGenesysConversation() {
-    Genesys("command", "MessagingService.clearConversation", {}, 
-			function() {
-			/*fulfilled callback*/
-			},
-			function() {
-			/*rejected callback*/
-			});
-    // Cleans localStorage
-};
+function getTranscript() {
+    // 1. Prvo izvlačimo poruke
+    Genesys("command", "MessagingService.getMessages", {}, (data) => {
+        if (data.messages && data.messages.length > 0) {
+            const firstMessageId = data.messages[0].id;
+            console.log("Prvi Message ID:", firstMessageId);
+
+            // 2. Izvlačimo Conversation ID
+            Genesys("command", "MessagingService.getConversation", {}, (convData) => {
+                const conversationId = convData.id;
+                const apiGatewayUrl = 'https://lon6l2voxsinnhpai3xxzsrvx40hwbfs.lambda-url.ca-central-1.on.aws/';
+
+                fetch(apiGatewayUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ convId: conversationId })
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Greška na serveru');
+                    return response.json();
+                })
+                .then(result => {
+                    if(result.transcriptUrl) {
+                        window.open(result.transcriptUrl, '_blank');
+                    } else {
+                        alert("Transkript još nije spreman. Pokušajte čim se chat završi.");
+                    }
+                })
+                .catch(err => console.error("Greška pri pozivu Lambde:", err));
+            }); // Zatvara MessagingService.getConversation
+        } else {
+            alert("no messages");
+        }
+    }); // Zatvara MessagingService.getMessages
+} // Zatvara getTranscript
+
 			
 		  </script>
 	</head>
 		<body>
 
 		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="icon.svg"> </button>
+		<br><button id="transcript-btn" onclick="getTranscript()"> Transcript</button>
 	<style>
 
 #custom-launcher{
