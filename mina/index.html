@@ -48,8 +48,10 @@
     }
 function getTranscript() {
     // 1. Prvo izvlačimo poruke ;
-    Genesys("command", "MessagingService.messagesReceived", {}, (data) => {
-        if (data.messages && data.messages.length > 0) {
+   Genesys("command", "MessagingService.messagesReceived", {}, 
+        (data) => {
+            // Provera strukture podataka
+            if (data && data.messages && data.messages.length > 0) {
             // Uzimamo ID poslednje poruke (on sigurno postoji u objektu poruke)
             const lastMessageId = data.messages[data.messages.length - 1].id;
             console.log("Šaljem Message ID Lambdi:", lastMessageId);
