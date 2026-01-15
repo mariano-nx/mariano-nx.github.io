@@ -46,21 +46,36 @@
 	  function openMessenger() {
       Genesys("command", "Messenger.open");
     }
-function getTranscript() {
-    // 1. Prvo izvlačimo poruke ;
+	let lastMsgId = ""; 
+let idCaptured = false; 
+
 Genesys("subscribe", "MessagingService.messagesReceived", function(data) {
-            // Provera strukture podataka
-            if (data && data.messages && data.messages.length > 0) {
-            // Uzimamo ID poslednje poruke (on sigurno postoji u objektu poruke)
-            const lastMessageId = data.messages[data.messages.length - 1].id;
-            console.log("Šaljem Message ID Lambdi:", lastMessageId);
+
+    if (!idCaptured && data.messages && data.messages.length > 0) {
+        
+        lastMsgId = data.messages[data.messages.length - 1].id;
+        idCaptured = true; 
+        
+        console.log("ID ", lastMsgId);
+    }
+});
+	
+function getTranscript() {
+
+if (!idCaptured) {
+        alert("please try again");
+        return;
+    }
+    
+
+    console.log("Pstart download", lastMsgId);
 
             const apiGatewayUrl = 'https://lon6l2voxsinnhpai3xxzsrvx40hwbfs.lambda-url.ca-central-1.on.aws/';
 
             fetch(apiGatewayUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                // Šaljemo messageId
+
                 body: JSON.stringify({ msgId: lastMessageId })
             })
             .then(response => response.json())
@@ -68,13 +83,13 @@ Genesys("subscribe", "MessagingService.messagesReceived", function(data) {
                 if(result.transcriptUrl) {
                     window.open(result.transcriptUrl, '_blank');
                 } else {
-                    alert("Transkript još nije generisan.");
+                    alert("Transcript not yet geenrated.");
                 }
             })
             .catch(err => console.error("Greška:", err));
         }
-    }); // Zatvara MessagingService.getMessages
-} // Zatvara getTranscript
+    }); 
+} 
 
 			
 		  </script>
