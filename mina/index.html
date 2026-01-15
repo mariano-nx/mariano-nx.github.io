@@ -50,7 +50,7 @@
 let idCaptured = false; 
 
 Genesys("subscribe", "MessagingService.messagesReceived", function(data) {
-console.log("Event: messagesReceived okinut");
+console.log(data);
     if (!idCaptured && data.messages && data.messages.length > 0) {
         
         lastMsgId = data.messages[data.messages.length - 1].id;
