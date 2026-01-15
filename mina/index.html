@@ -48,8 +48,7 @@
     }
 function getTranscript() {
     // 1. Prvo izvlačimo poruke ;
-   Genesys("command", "MessagingService.messagesReceived", {}, 
-        (data) => {
+Genesys("subscribe", "MessagingService.messagesReceived", function(data) {
             // Provera strukture podataka
             if (data && data.messages && data.messages.length > 0) {
             // Uzimamo ID poslednje poruke (on sigurno postoji u objektu poruke)
