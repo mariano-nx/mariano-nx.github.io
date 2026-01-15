@@ -77,7 +77,7 @@ if (!idCaptured) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
 
-                body: JSON.stringify({ msgId: lastMessageId })
+                body: JSON.stringify({ msgId: lastMsgId })
             })
             .then(response => response.json())
             .then(result => {
