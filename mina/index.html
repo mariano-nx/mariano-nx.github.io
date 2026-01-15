@@ -49,12 +49,13 @@
 	let lastMsgId = ""; 
 let idCaptured = false; 
 
-Genesys("subscribe", "MessagingService.messagesReceived", function(data) {
-console.log(data);
-    if (!idCaptured && data.messages && data.messages.length > 0) {
+Genesys("subscribe", "MessagingService.messagesReceived", function(event) {
+
+    if (!idCaptured && event.data && event.data.messages && event.data.messages.length > 0) {
         
-        lastMsgId = data.messages[data.messages.length - 1].id;
-        idCaptured = true; 
+        // Uzimamo id iz prve poruke u nizu
+        lastMsgId = event.data.messages[0].id;
+        idCaptured = true;
         
         console.log("ID ", lastMsgId);
     }
