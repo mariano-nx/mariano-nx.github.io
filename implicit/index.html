@@ -515,6 +515,7 @@
 
         // 3. Extract the token (remember, .get() returns null automatically if not found)
         const idToken = hashParams.get('id_token');
+        console.log(idToken);
         const iss = urlParams.has('iss') ? urlParams.get('iss'):null; // Get optional iss parameter from the query string. urlParams will decode this issuer URL if it is encoded.
 
 /* Register Command - mandatory */
