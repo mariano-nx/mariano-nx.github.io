@@ -506,7 +506,15 @@
 
         const urlParams = new URLSearchParams(window.location.search); // Get the authorization response which is added as a query string from the redirect URL
         //const authCode = urlParams.has('code') ? urlParams.get('code'); // Auth code flow: Get code from the query string
-        const idToken = urlParams.has('id_token') ? urlParams.get('id_token'):null; // Implicit flow: Get id_tokenw from the query string
+        //const idToken = urlParams.has('id_token') ? urlParams.get('id_token'):null; // Implicit flow: Get id_tokenw from the query string
+        // 1. Get the hash fragment, removing the leading '#'
+        const hashString = window.location.hash.substring(1);
+
+        // 2. Parse the hash string into a URLSearchParams object
+        const hashParams = new URLSearchParams(hashString);
+
+        // 3. Extract the token (remember, .get() returns null automatically if not found)
+        const idToken = hashParams.get('id_token');
         const iss = urlParams.has('iss') ? urlParams.get('iss'):null; // Get optional iss parameter from the query string. urlParams will decode this issuer URL if it is encoded.
 
 /* Register Command - mandatory */
