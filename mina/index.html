@@ -40,27 +40,64 @@
 			
 				  Genesys("subscribe", "Messenger.ready", function() {
 		  document.getElementById("custom-launcher").style.display = "block";
+		  document.getElementById("transcript-btn").style.display = "block";
 		}); 
 			
 	  function openMessenger() {
       Genesys("command", "Messenger.open");
     }
-	function clearGenesysConversation() {
-    Genesys("command", "MessagingService.clearConversation", {}, 
-			function() {
-			/*fulfilled callback*/
-			},
-			function() {
-			/*rejected callback*/
-			});
-    // Cleans localStorage
-};
+	let lastMsgId = ""; 
+let idCaptured = false; 
+
+Genesys("subscribe", "MessagingService.messagesReceived", function(event) {
+
+    if (!idCaptured && event.data && event.data.messages && event.data.messages.length > 0) {
+        
+        // Uzimamo id iz prve poruke u nizu
+        lastMsgId = event.data.messages[0].id;
+        idCaptured = true;
+        
+        console.log("ID ", lastMsgId);
+    }
+});
+	
+function getTranscript() {
+
+if (!idCaptured) {
+        alert("please try again");
+        return;
+    }
+    
+
+    console.log("Pstart download", lastMsgId);
+
+            const apiGatewayUrl = ""
+
+            fetch(apiGatewayUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+
+                body: JSON.stringify({ msgId: lastMsgId })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.transcriptUrl) {
+                    window.open(result.transcriptUrl, '_blank');
+                } else {
+                    alert("Transcript not yet geeenrated.");
+                }
+            })
+            .catch(err => console.error("Greška:", err));
+        }
+
+
 			
 		  </script>
 	</head>
 		<body>
 
 		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="icon.svg"> </button>
+		<br><button id="transcript-btn" onclick="getTranscript()"> Transcript</button>
 	<style>
 
 #custom-launcher{
