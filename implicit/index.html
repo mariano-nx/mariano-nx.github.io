@@ -32,7 +32,7 @@
 		issuer: "https://integrator-2892704.okta.com/oauth2/default",
 		scopes: ['openid', 'email', 'profile'],
 		pkce: false, // default is true. Set to 'false' in case of implicit/authorization code flow
-		responseType: 'code',
+		responseType:  ['id_token', 'token'],
 		maxAge : 3600
 		};
 		const authClient = new OktaAuth(oktaConfig)
