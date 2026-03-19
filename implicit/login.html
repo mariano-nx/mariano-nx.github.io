@@ -52,48 +52,6 @@
  	...oktaConfig
  	});
  }
-
- Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
-
-// COMMAND
-// *********
-// getAuthCode
-
-let oktaTransactionStorage = window.document.cookie.toString(); // Get nonce from cookie
-
-if (oktaTransactionStorage) {
-const storage = oktaTransactionStorage.split('okta-oauth-nonce=')[1]; // Extract 'okta-oauth-nonce' cookie from 'oktaTransactionStorage'
-const nonce = storage.split(';')[0];
-}
-
-const urlParams = new URLSearchParams(window.location.search); // Get the authorization response which is added as a query string from the redirect URL
-//const authCode = urlParams.has('code') ? urlParams.get('code'); // Auth code flow: Get code from the query string
-const idToken = new URLSearchParams(window.location.hash.substring(1)).get('id_token'); // Implicit flow: Get id_tokenw from the query string
-const iss = urlParams.has('iss') ? urlParams.get('iss'):null; // Get optional iss parameter from the query string. urlParams will decode this issuer URL if it is encoded.
-
-/* Register Command - mandatory */
-
-AuthProvider.registerCommand('getAuthCode', (e) => {
-
-//Messenger calls this command to get the the tokens.
-
-e.resolve({
-	//authCode: <authCode>,			// Auth code flow: Pass your authCode here
-	idToken: idToken,                      // Implicit flow: Pass your Id token here
-	redirectUri: "https://mariano-nx.github.io/implicit/index.html",	        // Pass the redirection URI configured in your authentication provider here
-	nonce: nonce,				//  Mandatory parameter in OKTA Javascript SDK approach.
-	maxAge: 3600				// Pass the elapsed time in seconds as an optional parameter
-  });
-});
-
-AuthProvider.subscribe('Auth.authError', (error) => {
-
-// This event is published across the browser tabs/devices where the user is logged in, so you can do something on logout.
-// For example, clear any authenticated flags that you might have set during login.
-console.log(error);
-});
-AuthProvider.ready();
-});
 }
 
 
@@ -101,6 +59,6 @@ AuthProvider.ready();
 </head>
 
 <body>	
-	<p>test</p>
-</body>
+	
+	<button onclick="signIn()">Login</button>
 </html>
